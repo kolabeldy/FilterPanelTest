@@ -25,7 +25,7 @@
                          PlacementMode="BottomAndAlignLeftEdges"
                          HorizontalAlignment="Left"
                          PopupVerticalOffset="5"
-                         PopupHorizontalOffset="-15"
+                         PopupHorizontalOffset="-10"
                          IsPopupOpen="{Binding IsFilterPopupOpen}">
                 <UserControl x:Name="FilterPanel" 
                              Content="{Binding FilterPanel}"/>
