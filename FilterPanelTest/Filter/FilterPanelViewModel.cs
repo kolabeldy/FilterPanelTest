@@ -35,18 +35,19 @@ public class FilterPanelViewModel
     public string NewFilterData { get => _NewFilterData; set => Set(ref _NewFilterData, value); }
 
     private FilterSet filterSet;
+
     private void Refresh()
     {
         //filterSet = new();
         if (isPeriodVisible)
         {
             Period period = FilterPeriodViewModel.PeriodData;
-            period.SetDynamicPeriods();
+            //period.SetDynamicPeriods();
             FilterPeriodViewModel.IsChanged = false;
             filterSet.StartPeriod = period.SelectedStartPeriod;
             filterSet.EndPeriod = period.SelectedEndPeriod;
-            filterSet.StartDate = period.SelectedStartDate;
-            filterSet.EndDate = period.SelectedEndDate;
+            //filterSet.StartDate = period.SelectedStartDate;
+            //filterSet.EndDate = period.SelectedEndDate;
             filterSet.StartDynamicPeriod = period.MinDynamicSelectedPeriod;
             filterSet.EndDynamicPeriod = period.MaxDynamicSelectedPeriod;
         }
@@ -144,7 +145,7 @@ public class FilterPanelViewModel
     }
     private void Close()
     {
-        if (FilterPeriodViewModel != null && FilterPeriodViewModel.SelectedStartDate > FilterPeriodViewModel.SelectedEndDate)
+        if (FilterPeriodViewModel != null && FilterPeriodViewModel.SelectedStartPeriod > FilterPeriodViewModel.SelectedEndPeriod)
         {
             bool? Result = new MessageBoxCustom("Начальная дата не может быть больше конечной!", MessageType.Confirmation, MessageButtons.Ok).ShowDialog();
             return;

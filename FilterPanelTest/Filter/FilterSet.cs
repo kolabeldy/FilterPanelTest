@@ -1,5 +1,5 @@
 ﻿namespace FilterPanelTest.Filter;
-public struct FilterSet
+public class FilterSet
 {
     public int StartPeriod { get; set; }
     public DateTime StartDate { get; set; }

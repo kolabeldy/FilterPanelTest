@@ -1,6 +1,30 @@
 ﻿namespace FilterPanelTest.Filter.Partials;
 public class FilterPeriodViewModel : INotifyPropertyChanged
 {
+    public List<Period> SourcePeriodsList { get; set; }
+
+    private Period _StartPeriodBoxSelectedItem;
+    public Period StartPeriodBoxSelectedItem
+    {
+        get => _StartPeriodBoxSelectedItem;
+        set
+        {
+            Set(ref _StartPeriodBoxSelectedItem, value);
+            SelectedStartPeriod = value.Id;
+            IsChanged = true;
+        }
+    }
+    private Period _EndPeriodBoxSelectedItem;
+    public Period EndPeriodBoxSelectedItem
+    {
+        get => _EndPeriodBoxSelectedItem;
+        set
+        {
+            Set(ref _EndPeriodBoxSelectedItem, value);
+            SelectedEndPeriod = value.Id;
+            IsChanged = true;
+        }
+    }
     public Period PeriodData { get; set; }
 
     private bool _IsChanged;
@@ -13,54 +37,31 @@ public class FilterPeriodViewModel : INotifyPropertyChanged
         }
     }
 
-    private DateTime _DisplayDateStart;
-    public DateTime DisplayDateStart
+    private int _SelectedStartPeriod;
+    public int SelectedStartPeriod
     {
-        get => _DisplayDateStart;
+        get => _SelectedStartPeriod;
         set
         {
-            if (Set(ref _DisplayDateStart, value))
+            if (Set(ref _SelectedStartPeriod, value))
             {
+                PeriodData.SelectedStartPeriod = value;
+                PeriodData.SetDynamicPeriods();
                 IsChanged = true;
             }
         }
     }
-    private DateTime _DisplayDateEnd;
-    public DateTime DisplayDateEnd
+    private int _SelectedEndPeriod;
+    public int SelectedEndPeriod
     {
-        get => _DisplayDateEnd;
+        get => _SelectedEndPeriod;
         set
         {
-            if (Set(ref _DisplayDateEnd, value))
+            if (Set(ref _SelectedEndPeriod, value))
             {
+                PeriodData.SelectedEndPeriod = value;
+                PeriodData.SetDynamicPeriods();
                 IsChanged = true;
-            }
-        }
-    }
-
-    private DateTime _SelectedStartDate;
-    public DateTime SelectedStartDate
-    {
-        get => _SelectedStartDate;
-        set
-        {
-            if (Set(ref _SelectedStartDate, value))
-            {
-                IsChanged = true;
-                PeriodData.SelectedStartDate = value;
-            }
-        }
-    }
-    private DateTime _SelectedEndDate;
-    public DateTime SelectedEndDate
-    {
-        get => _SelectedEndDate;
-        set
-        {
-            if (Set(ref _SelectedEndDate, value))
-            {
-                IsChanged = true;
-                PeriodData.SelectedEndDate = value;
             }
         }
     }
@@ -68,11 +69,10 @@ public class FilterPeriodViewModel : INotifyPropertyChanged
     public FilterPeriodViewModel()
     {
         PeriodData = new Period();
-        DateTime currDate = new DateTime(Period.MaxYear, Period.MaxMonth, 1);
-        DisplayDateStart = new DateTime(Period.MinYear, Period.MinMonth, 1);
-        DisplayDateEnd = currDate;
-        SelectedStartDate = currDate;
-        SelectedEndDate = new DateTime(currDate.Year, currDate.Month, DateTime.DaysInMonth(currDate.Year, currDate.Month));
+        int currPeriod = Period.MaxPeriod;
+        SelectedStartPeriod = currPeriod;
+        SelectedEndPeriod = currPeriod;
+        SourcePeriodsList = Period.Periods;
     }
 
     #region INotifyProperty
