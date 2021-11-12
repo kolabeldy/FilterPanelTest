@@ -73,6 +73,8 @@ public class FilterPeriodViewModel : INotifyPropertyChanged
         SelectedStartPeriod = currPeriod;
         SelectedEndPeriod = currPeriod;
         SourcePeriodsList = Period.Periods;
+        StartPeriodBoxSelectedItem = Period.Periods[0];
+        EndPeriodBoxSelectedItem = Period.Periods[0];
     }
 
     #region INotifyProperty

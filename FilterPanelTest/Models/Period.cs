@@ -75,6 +75,8 @@ public class Period : INotifyPropertyChanged, IDBModel
 
     public Period()
     {
+        SelectedStartPeriod = MaxPeriod;
+        SelectedEndPeriod = MaxPeriod;
     }
     public static int GetYear(int period) => period / 100;
     public static int GetMonth(int period) => period - GetYear(period) * 100;
