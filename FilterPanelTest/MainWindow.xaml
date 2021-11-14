@@ -35,6 +35,10 @@
                 <UserControl x:Name="FilterPanel" 
                              Content="{Binding FilterPanel}"/>
             </md:PopupBox>
+            <UserControl x:Name="FilterDatePanel" 
+                         Content="{Binding FilterDate}"  
+                         Margin="10,0,0,0" 
+                         VerticalAlignment="Center" />
         </StackPanel>
         <StackPanel Grid.Row="1"
                     Margin="0,50">

@@ -3,6 +3,24 @@
 namespace FilterPanelTest;
 public class MainWindowModel : BaseViewModel
 {
+    private List<TreePerson> filterDateList;
+
+    protected FilterSection _FilterDate;
+    public FilterSection FilterDate
+    {
+        get => _FilterDate;
+        set
+        {
+            Set(ref _FilterDate, value);
+        }
+    }
+
+    private FilterSectionDateViewModel modelDate;
+    public bool FiltersIsChanged;
+
+
+
+
     public FilterPanel FilterPanel { get; set; }
 
     protected FilterPanelViewModel filterPanelViewModel;
@@ -137,5 +155,16 @@ public class MainWindowModel : BaseViewModel
         filterPanelViewModel.OnFilterChanged += Refresh;
         FilterPanel = new FilterPanel(filterPanelViewModel);
         Refresh(FilterSet);
+
+        modelDate = new FilterSectionDateViewModel("Период:", TreeInitType.Last);
+        modelDate.onChange += FilterDateOnChangeHandler;
+        modelDate.Init();
+        FilterDate = new FilterSection(modelDate);
     }
+    private void FilterDateOnChangeHandler()
+    {
+        FiltersIsChanged = true;
+        filterDateList = modelDate.FilterList;
+    }
+
 }

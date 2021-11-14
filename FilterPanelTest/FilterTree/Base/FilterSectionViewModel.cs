@@ -128,7 +128,7 @@ public abstract class FilterSectionViewModel : INotifyPropertyChanged
     #region Methods
     public void Init()
     {
-        Families = FamiliesInit(RetFamilies());
+        Families = FamiliesInit(RetTreeFamilies());
         FilterList = PersonListFill();
         SelectedText = RetSelected();
         onChange();
@@ -167,7 +167,7 @@ public abstract class FilterSectionViewModel : INotifyPropertyChanged
             }
         return families;
     }
-    public abstract ObservableCollection<TreeFamily> RetFamilies();
+    public abstract ObservableCollection<TreeFamily> RetTreeFamilies();
 
     protected List<TreePerson> PersonListFill()
     {
