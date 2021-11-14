@@ -20,17 +20,20 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0"
+                    Background="{StaticResource PrimaryHueMidBrush}"
                     VerticalAlignment="Top"
-                    HorizontalAlignment="Left"
+                    HorizontalAlignment="Stretch"
                     Orientation="Horizontal">
             <TextBlock Text="Filter"
+                       Foreground="White"
                        Margin="10" />
             <md:PopupBox Name="FilterPopup"
                          StaysOpen="True"
+                         Foreground="White"
                          PlacementMode="BottomAndAlignLeftEdges"
-                         HorizontalAlignment="Left"
-                         PopupVerticalOffset="5"
+                         PopupVerticalOffset="15"
                          PopupHorizontalOffset="-10"
+                         HorizontalAlignment="Left"
                          IsPopupOpen="{Binding IsFilterPopupOpen}">
                 <UserControl x:Name="FilterPanel" 
                              Content="{Binding FilterPanel}"/>

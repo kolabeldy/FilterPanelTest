@@ -158,7 +158,7 @@ public class Period : INotifyPropertyChanged, IDBModel
     }
 
 
-    private static string[] monthArray = new string[]
+    public static string[] monthArray = new string[]
     { "янв", "фев", "мар", "апр", "май", "июн", "июл", "авг", "сен", "окт", "ноя", "дек" };
 
     #region IDBModel realisattion

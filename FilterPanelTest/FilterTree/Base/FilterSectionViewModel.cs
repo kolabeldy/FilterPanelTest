@@ -8,8 +8,8 @@ public abstract class FilterSectionViewModel : INotifyPropertyChanged
 
 
     #region Properties
-    public ObservableCollection<TreeFamily> Families { get; set; }
-    public string Tittle { get; set; }
+    public ObservableCollection<TreeFamily> FilterTreeItems { get; set; }
+    public string Tittle { get; set; } = "Title";
     public List<TreePerson> FilterList { get; set; }
     #endregion
 
@@ -41,60 +41,6 @@ public abstract class FilterSectionViewModel : INotifyPropertyChanged
         }
     }
 
-    private bool isFilterSectionEnabled = true;
-    public bool IsFilterSectionEnabled
-    {
-        get
-        {
-            return isFilterSectionEnabled;
-        }
-        set
-        {
-            isFilterSectionEnabled = value;
-            OnPropertyChanged("IsFilterSectionEnabled");
-        }
-    }
-    private Visibility toggleButtonCheckedAllIsVisible = Visibility.Visible;
-    public Visibility ToggleButtonCheckedAllIsVisible
-    {
-        get
-        {
-            return toggleButtonCheckedAllIsVisible;
-        }
-        set
-        {
-            toggleButtonCheckedAllIsVisible = value;
-            OnPropertyChanged("ToggleButtonCheckedAllIsVisible");
-        }
-    }
-    private Visibility isFilterSectionVisible = Visibility.Visible;
-    public Visibility IsFilterSectionVisible
-    {
-        get
-        {
-            return isFilterSectionVisible;
-        }
-        set
-        {
-            isFilterSectionVisible = value;
-            OnPropertyChanged("IsFilterSectionVisible");
-        }
-    }
-
-    private double popupOffset = 0;
-    public double PopupHorisontalOffset
-    {
-        get
-        {
-            return popupOffset;
-        }
-        set
-        {
-            popupOffset = value;
-            OnPropertyChanged("PopupOffset");
-        }
-    }
-
     private string selectedText;
     public string SelectedText
     {
@@ -117,18 +63,19 @@ public abstract class FilterSectionViewModel : INotifyPropertyChanged
     private int filterListAllCount;
 
     #endregion
-    public FilterSectionViewModel(string tittle, TreeInitType treeInitType)
+    public FilterSectionViewModel()
     {
-        Families = new ObservableCollection<TreeFamily>();
+        FilterTreeItems = new ObservableCollection<TreeFamily>();
         FilterList = new List<TreePerson>();
-        this.treeInitType = treeInitType;
-        this.Tittle = tittle;
     }
 
     #region Methods
-    public void Init()
+    public void Init(string tittle = null, TreeInitType treeInitType = TreeInitType.All)
     {
-        Families = FamiliesInit(RetTreeFamilies());
+        this.treeInitType = treeInitType;
+        this.Tittle = tittle;
+
+        FilterTreeItems = FamiliesInit(RetTreeFamilies());
         FilterList = PersonListFill();
         SelectedText = RetSelected();
         onChange();
@@ -172,7 +119,7 @@ public abstract class FilterSectionViewModel : INotifyPropertyChanged
     protected List<TreePerson> PersonListFill()
     {
         List<TreePerson> result = new List<TreePerson>();
-        foreach (TreeFamily family in Families)
+        foreach (TreeFamily family in FilterTreeItems)
             foreach (TreePerson person in family.Members)
                 if (ItemHelper.GetIsChecked(person) == true)
                 {
@@ -208,7 +155,7 @@ public abstract class FilterSectionViewModel : INotifyPropertyChanged
     }
     protected void SelectAll()
     {
-        foreach (TreeFamily family in Families)
+        foreach (TreeFamily family in FilterTreeItems)
             foreach (var person in family.Members)
             {
                 ItemHelper.SetIsChecked(person, true);
@@ -216,7 +163,7 @@ public abstract class FilterSectionViewModel : INotifyPropertyChanged
     }
     protected void UnselectAll()
     {
-        foreach (TreeFamily family in Families)
+        foreach (TreeFamily family in FilterTreeItems)
             foreach (var person in family.Members)
             {
                 ItemHelper.SetIsChecked(person, false);
@@ -232,10 +179,10 @@ public abstract class FilterSectionViewModel : INotifyPropertyChanged
                 (selectAll_Command = new RelayCommand(obj =>
                 {
                     SelectAll();
-                        //UnselectAll();
-                    }));
+                }));
         }
     }
+
     private RelayCommand unselectAll_Command;
     public RelayCommand UnselectAll_Command
     {
@@ -244,8 +191,7 @@ public abstract class FilterSectionViewModel : INotifyPropertyChanged
             return unselectAll_Command ??
                 (unselectAll_Command = new RelayCommand(obj =>
                 {
-                        //SelectAll();
-                        UnselectAll();
+                    UnselectAll();
                 }));
         }
     }

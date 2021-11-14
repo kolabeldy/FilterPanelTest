@@ -68,7 +68,7 @@ public class Product : IdName, IDBModel
         if (rec == null) return -1;
         else
         {
-            Product? record = rec as Product;
+            Product record = rec as Product;
             string sql = String.Format("INSERT INTO Products (Id, Name, IdCC, IdUnit) VALUES ( {0}, {1}, {2}, {3} )",
                                         record.Id.ToString(), record.Name, record.CostCenter.Id.ToString(), record.IdUnit.ToString());
             return Sqlite.ExecNonQuery(sql);
@@ -82,7 +82,7 @@ public class Product : IdName, IDBModel
     public int Update(object rec)
     {
         if (rec == null) return -1;
-        Product? record = rec as Product;
+        Product record = rec as Product;
         string sql = string.Format("UPDATE Products SET (Name, IdCC, IdUnit) = ({0}, {1}, {2}) WHERE Id = {3}",
                          record.Name, record.CostCenter.Id, record.IdUnit.ToString(), record.Id.ToString());
 

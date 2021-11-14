@@ -8,7 +8,7 @@ public class IsNormConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
     {
-        string par = parameter as string;
+        string? par = parameter as string;
         string[] result = par.Split('-');
         bool isTrue = (bool)value;
         if (isTrue)

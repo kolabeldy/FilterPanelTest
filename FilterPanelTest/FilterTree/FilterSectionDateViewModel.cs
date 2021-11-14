@@ -1,10 +1,6 @@
 ﻿namespace FilterPanelTest.FilterTree;
 public class FilterSectionDateViewModel : FilterSectionViewModel
 {
-    public FilterSectionDateViewModel(string tittle, TreeInitType treeInitType) : base(tittle, treeInitType)
-    {
-
-    }
     public override ObservableCollection<TreeFamily> RetTreeFamilies()
     {
         int periodFirst = Period.MinPeriod;
@@ -12,7 +8,6 @@ public class FilterSectionDateViewModel : FilterSectionViewModel
         int lastPeriod = Period.MaxPeriod;
         int lastYear = Period.MaxYear;
         int lastMonth = Period.MaxMonth;
-        string[] arrMonth = new string[] { "янв", "фев", "мар", "апр", "май", "июн", "июл", "авг", "сен", "окт", "ноя", "дек" };
         int[] arrYear = new int[lastYear - startYear + 1];
         for (int i = 0; i < (lastYear - startYear + 1); i++)
         {
@@ -42,7 +37,7 @@ public class FilterSectionDateViewModel : FilterSectionViewModel
                 resultPersons.Add(new TreePerson()
                 {
                     Id = year * 100 + m,
-                    Name = year.ToString() + " " + arrMonth[m - 1],
+                    Name = year.ToString() + " " + Period.monthArray[m - 1]
                 });
             }
             return resultPersons;
@@ -55,7 +50,7 @@ public class FilterSectionDateViewModel : FilterSectionViewModel
                 rez2.Add(new TreePerson()
                 {
                     Id = year * 100 + m,
-                    Name = year.ToString() + " " + arrMonth[m - 1],
+                    Name = year.ToString() + " " + Period.monthArray[m - 1]
                 });
             }
             return rez2;

@@ -11,7 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyServicesLibrary", "MyServ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyUserControlsLibrary", "MyUserControlsLibrary\MyUserControlsLibrary.csproj", "{E734BA8D-F600-4B36-9EB5-80803BB85923}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCheckedTreeLibrary", "MyCheckedTree\MyCheckedTreeLibrary.csproj", "{0AE9CA7E-5086-45E6-A6A1-E1A65F0035F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyCheckedTreeLibrary", "MyCheckedTree\MyCheckedTreeLibrary.csproj", "{0AE9CA7E-5086-45E6-A6A1-E1A65F0035F7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7AF0C3F1-3A56-4F80-AB50-387BDC42E79E}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

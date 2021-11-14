@@ -10,7 +10,7 @@ public class EnergyResource : INotifyPropertyChanged, IDBModel
     private string _NameFull;
     public string NameFull { get => _NameFull; set => Set(ref _NameFull, value); }
     public int IdGroup { get; set; }
-    public string? ShortName { get; set; }
+    public string ShortName { get; set; }
     public int IdUnit { get; set; }
     public bool IsMain { get; set; }
     public bool IsActual { get; set; }

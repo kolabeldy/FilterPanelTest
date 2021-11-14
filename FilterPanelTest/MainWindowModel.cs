@@ -5,15 +5,7 @@ public class MainWindowModel : BaseViewModel
 {
     private List<TreePerson> filterDateList;
 
-    protected FilterSection _FilterDate;
-    public FilterSection FilterDate
-    {
-        get => _FilterDate;
-        set
-        {
-            Set(ref _FilterDate, value);
-        }
-    }
+    public FilterSection FilterDate { get; set; }
 
     private FilterSectionDateViewModel modelDate;
     public bool FiltersIsChanged;
@@ -147,6 +139,12 @@ public class MainWindowModel : BaseViewModel
 
     public MainWindowModel(bool periodVisible, bool ccVisible, bool erVisible, bool ntVisible)
     {
+        OldFilterInit(periodVisible, ccVisible, erVisible, ntVisible);
+        NewFilterInit();
+    }
+
+    private void OldFilterInit(bool periodVisible, bool ccVisible, bool erVisible, bool ntVisible)
+    {
         FilterSet filterSet = new();
         FilterSet = new();
         filterPanelViewModel = new FilterPanelViewModel(ref filterSet, periodVisible, ccVisible, erVisible, ntVisible);
@@ -155,10 +153,12 @@ public class MainWindowModel : BaseViewModel
         filterPanelViewModel.OnFilterChanged += Refresh;
         FilterPanel = new FilterPanel(filterPanelViewModel);
         Refresh(FilterSet);
-
-        modelDate = new FilterSectionDateViewModel("Период:", TreeInitType.Last);
+    }
+    private void NewFilterInit()
+    {
+        modelDate = new FilterSectionDateViewModel();
         modelDate.onChange += FilterDateOnChangeHandler;
-        modelDate.Init();
+        modelDate.Init("Период:", TreeInitType.Last);
         FilterDate = new FilterSection(modelDate);
     }
     private void FilterDateOnChangeHandler()

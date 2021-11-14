@@ -8,7 +8,7 @@ namespace MyDataAccessLibrary;
 
 public static class Sqlite
 {
-    public static string PathDB;
+    public static string? PathDB;
     public static DataTable Select(string sql)
     {
 

@@ -13,7 +13,7 @@ public class Use
         SelectedCostCenters = _SelectedCostCenters;
         SelectedEnergyResources = _SelectedEnergyResources;
     }
-    public List<UseValue>? Get()
+    public List<UseValue> Get()
     {
         string _wherePeriods = "( ";
         foreach (var r in SelectedPeriods)

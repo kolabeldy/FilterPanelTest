@@ -4,7 +4,7 @@ using System.Windows;
 namespace MyCheckedTreeLibrary;
 public class TreeFamily : DependencyObject, IParent<object>
 {
-    public string Name { get; set; }
+    public string? Name { get; set; }
     public int Id { get; set; }
     public List<TreePerson>? Members { get; set; }
 
