@@ -15,6 +15,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\MyCheckedTree\MyCheckedTreeLibrary.csproj" />
 	  <ProjectReference Include="..\MyServicesLibrary\MyServicesLibrary.csproj" />
 		<ProjectReference Include="..\MyDataAccessLibrary\MyDataAccessLibrary.csproj" />
 	</ItemGroup>
