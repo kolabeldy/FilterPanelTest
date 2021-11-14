@@ -15,7 +15,12 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="560" WindowStartupLocation="CenterScreen">
     <Grid>
-        <StackPanel VerticalAlignment="Top"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0"
+                    VerticalAlignment="Top"
                     HorizontalAlignment="Left"
                     Orientation="Horizontal">
             <TextBlock Text="Filter"
@@ -25,11 +30,26 @@
                          PlacementMode="BottomAndAlignLeftEdges"
                          HorizontalAlignment="Left"
                          PopupVerticalOffset="5"
-                         PopupHorizontalOffset="-15"
+                         PopupHorizontalOffset="-10"
                          IsPopupOpen="{Binding IsFilterPopupOpen}">
                 <UserControl x:Name="FilterPanel" 
                              Content="{Binding FilterPanel}"/>
             </md:PopupBox>
+        </StackPanel>
+        <StackPanel Grid.Row="1"
+                    Margin="0,50">
+            <Label Margin="50,10"
+                   Content="{Binding TitleStartPeriod}" />
+            <Label Margin="50,10"
+                   Content="{Binding TitleEndPeriod}" />
+            <Label Margin="50,10"
+                   Content="{Binding TitleStartDynamicPeriod}" />
+            <Label Margin="50,10"
+                   Content="{Binding TitleEndDynamicPeriod}" />
+            <TextBlock Margin="50,10"
+                       Text="{Binding TitleSelectedCCGroup}" />
+            <TextBlock Margin="50,10"
+                       Text="{Binding TitleSelectedERGroup}" />
         </StackPanel>
     </Grid>
 </Window>

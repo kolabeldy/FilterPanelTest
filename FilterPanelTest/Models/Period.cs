@@ -33,27 +33,27 @@ public class Period : INotifyPropertyChanged, IDBModel
     private string _MonthName;
     public string MonthName { get => _MonthName; set => Set(ref _MonthName, value); }
 
-    private DateTime _SelectedStartDate;
-    public DateTime SelectedStartDate
-    {
-        get => _SelectedStartDate;
-        set
-        {
-            SelectedStartPeriod = DateTimeToInt(value);
-            Set(ref _SelectedStartDate, value);
-        }
-    }
+    //private DateTime _SelectedStartDate;
+    //public DateTime SelectedStartDate
+    //{
+    //    get => _SelectedStartDate;
+    //    set
+    //    {
+    //        SelectedStartPeriod = DateTimeToInt(value);
+    //        Set(ref _SelectedStartDate, value);
+    //    }
+    //}
 
-    private DateTime _SelectedEndDate;
-    public DateTime SelectedEndDate
-    {
-        get => _SelectedEndDate;
-        set
-        {
-            SelectedEndPeriod = DateTimeToInt(value);
-            Set(ref _SelectedEndDate, value);
-        }
-    }
+    //private DateTime _SelectedEndDate;
+    //public DateTime SelectedEndDate
+    //{
+    //    get => _SelectedEndDate;
+    //    set
+    //    {
+    //        SelectedEndPeriod = DateTimeToInt(value);
+    //        Set(ref _SelectedEndDate, value);
+    //    }
+    //}
 
     private int _SelectedStartPeriod;
     public int SelectedStartPeriod { get => _SelectedStartPeriod; set => Set(ref _SelectedStartPeriod, value); }
@@ -71,21 +71,24 @@ public class Period : INotifyPropertyChanged, IDBModel
     public int MaxSelectedPeriod { get; set; }
     public int MinDynamicSelectedPeriod { get; set; }
     public int MaxDynamicSelectedPeriod { get; set; }
-    public List<Period> Periods { get; set; }
+    public static List<Period> Periods { get; set; }
 
     public Period()
     {
+        SelectedStartPeriod = MaxPeriod;
+        SelectedEndPeriod = MaxPeriod;
     }
     public static int GetYear(int period) => period / 100;
     public static int GetMonth(int period) => period - GetYear(period) * 100;
     public static string GetMonthName(int month) => monthArray[month - 1];
+
     public void SetDynamicPeriods()
     {
         int monthCount = DifferenceBetweenDatesInMonth(SelectedStartPeriod, SelectedEndPeriod);
         if (monthCount > 2)
         {
-            MinDynamicSelectedPeriod = DateTimeToInt(SelectedStartDate);
-            MaxDynamicSelectedPeriod = DateTimeToInt(SelectedEndDate);
+            MinDynamicSelectedPeriod = SelectedStartPeriod;
+            MaxDynamicSelectedPeriod = SelectedEndPeriod;
         }
         else
         {
@@ -102,6 +105,12 @@ public class Period : INotifyPropertyChanged, IDBModel
             }
         }
     }
+
+    private List<Period> GetPeriods()
+    {
+        return Get<Period>();
+    }
+
     public void Init((int minPeriod, int maxPeriod) periods)
     {
         MinPeriod = periods.minPeriod;
@@ -110,6 +119,7 @@ public class Period : INotifyPropertyChanged, IDBModel
         MaxYear = GetYear(MaxPeriod); ;
         MinMonth = GetMonth(MinPeriod);
         MaxMonth = GetMonth(MaxPeriod);
+        Periods = GetPeriods();
     }
 
     private static int DateTimeToInt(DateTime date)
@@ -132,6 +142,7 @@ public class Period : INotifyPropertyChanged, IDBModel
     }
     private static int PeriodMonthAdd(int period, int month)
     {
+        if(period == 0 || month == 0) return 0;
         DateTime date = new DateTime(GetYear(period), GetMonth(period), 1);
         return DateTimeToInt(date.AddMonths(month));
 
@@ -146,6 +157,7 @@ public class Period : INotifyPropertyChanged, IDBModel
         return ((GetYear(dateend) - GetYear(datestart)) * 12) + GetMonth(dateend) - GetMonth(datestart);
     }
 
+
     private static string[] monthArray = new string[]
     { "янв", "фев", "мар", "апр", "май", "июн", "июл", "авг", "сен", "окт", "ноя", "дек" };
 
@@ -153,26 +165,21 @@ public class Period : INotifyPropertyChanged, IDBModel
 
     public List<T> Get<T>()
     {
-        //List<T> result = new();
-        //List<Period> list = new();
+        List<T> result = new();
+        List<Period> list = new();
 
-        //var resourceManager = Properties.Resources.ResourceManager;
-        //string sql = "SELECT MIN(Period) FROM ERUsesMonth GROUP By Period";
+        string sql = "SELECT Period FROM ERUsesMonth GROUP BY Period ORDER BY Period DESC";
 
-        //DataTable dt = new DataTable();
-        //dt = Sqlite.Select(sql);
-        //list = (from DataRow dr in dt.Rows
-        //        select new CostCenter()
-        //        {
-        //            Id = Convert.ToInt32(dr["Id"]),
-        //            Name = dr["Name"].ToString(),
-        //            IsActual = Convert.ToBoolean(dr["IsActual"]),
-        //            IsMain = Convert.ToBoolean(dr["IsMain"]),
-        //            IsTechnology = Convert.ToBoolean(dr["IsTechnology"]),
-        //        }).ToList();
-        //result.AddRange((IEnumerable<T>)list);
-        //return result;
-        return null;
+        DataTable dt = new DataTable();
+        dt = Sqlite.Select(sql);
+        list = (from DataRow dr in dt.Rows
+                select new Period()
+                {
+                    Id = Convert.ToInt32(dr["Period"]),
+                    Name = GetPeriodName(Convert.ToInt32(dr["Period"]), MonthOutputStyle.AsString)
+                }).ToList();
+        result.AddRange((IEnumerable<T>)list);
+        return result;
     }
     public int Add(object rec)
     {
