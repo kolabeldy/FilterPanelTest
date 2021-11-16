@@ -32,7 +32,7 @@ global using MyServicesLibrary.ViewModelsBase;
 global using MyServicesLibrary.Helpers;
 //global using MyUserControlsLibrary.CaptionCard;
 global using MyServicesLibrary.Infrastructure.MessageBoxes;
-global using MyDataAccessLibrary;
+global using MyServicesLibrary.DataAccess;
 
 
 namespace FilterPanelTest;

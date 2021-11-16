@@ -49,7 +49,7 @@ public class CostCenter : IdName, IDBModel
         //string sql = resourceManager.GetString("sqlCostCenters_ToList").Replace("#whereStr", whereStr);
 
         DataTable dt = new DataTable();
-        dt = Sqlite.Select(sql);
+        dt = Sqlite.Select(Global.dbpath, sql);
         list = (from DataRow dr in dt.Rows
                 select new CostCenter()
                 {
@@ -69,12 +69,12 @@ public class CostCenter : IdName, IDBModel
         string sql = "INSERT INTO CostCenters (Id, Name, IsMain, IsTechnology, IsActual) VALUES ("
                         + record.Id.ToString() + ", '" + record.Name + "'" + ", " + record.IsMain.ToString() + ", "
                         + record.IsTechnology.ToString() + ", " + record.IsActual.ToString() + ")";
-        return Sqlite.ExecNonQuery(sql);
+        return Sqlite.ExecNonQuery(Global.dbpath, sql);
     }
     public int Delete(string whereStr)
     {
         string sql = "Delete FROM CostCenters WHERE " + whereStr;
-        return Sqlite.ExecNonQuery(sql);
+        return Sqlite.ExecNonQuery(Global.dbpath, sql);
     }
     public int Update(object rec)
     {
@@ -85,7 +85,7 @@ public class CostCenter : IdName, IDBModel
                         + ", " + record.IsTechnology.ToString() + ", " + record.IsActual.ToString() + ")"
                         + "WHERE Id = " + record.Id.ToString();
 
-        return Sqlite.ExecNonQuery(sql);
+        return Sqlite.ExecNonQuery(Global.dbpath, sql);
     }
     #endregion
 }

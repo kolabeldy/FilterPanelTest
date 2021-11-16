@@ -31,7 +31,7 @@ public class DataUse
         string sql = "SELECT IdER, ERName, UnitName, Fact, Plan, Diff, FactCost, PlanCost, DiffCost FROM MonitorUseGroupBy_IdER ORDER BY IdER";
         //var resourceManager = Properties.Resources.ResourceManager;
         DataTable dt = new DataTable();
-        dt = Sqlite.Select(sql);
+        dt = Sqlite.Select(Global.dbpath, sql);
         list = (from DataRow dr in dt.Rows
                 select new DataUse()
                 {
@@ -60,7 +60,7 @@ public class DataUse
         string sql = "SELECT * FROM AnalysisUseFromSelected_Period_CC ORDER BY IdCC, IsNorm DESC";
         //var resourceManager = Properties.Resources.ResourceManager;
         DataTable dt = new DataTable();
-        dt = Sqlite.Select(sql);
+        dt = Sqlite.Select(Global.dbpath, sql);
         list = (from DataRow dr in dt.Rows
                 select new DataUse()
                 {
@@ -91,7 +91,7 @@ public class DataUse
     {
         string sql = "SELECT MinPeriod, MaxPeriod FROM MinMaxPeriods";
         DataTable dt = new DataTable();
-        dt = Sqlite.Select(sql);
+        dt = Sqlite.Select(Global.dbpath, sql);
         int minPeriod = Convert.ToInt32(dt.Rows[0].ItemArray[0].ToString());
         int maxPeriod = Convert.ToInt32(dt.Rows[0].ItemArray[1].ToString());
         return (minPeriod, maxPeriod);

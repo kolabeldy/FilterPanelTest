@@ -31,7 +31,7 @@ public class FilterTable
         //var resourceManager = Properties.Resources.ResourceManager;
 
         DataTable dt = new DataTable();
-        dt = Sqlite.Select(sql);
+        dt = Sqlite.Select(Global.dbpath, sql);
         list = (from DataRow dr in dt.Rows
                 select new FilterTable()
                 {
@@ -47,7 +47,7 @@ public class FilterTable
     public int Delete(string category, string item)
     {
         string sql = string.Format("Delete FROM Filters WHERE Category = '{0}' AND Item = '{1}'", category, item);
-        return Sqlite.ExecNonQuery(sql);
+        return Sqlite.ExecNonQuery(Global.dbpath, sql);
     }
     public int AddRange(List<FilterTable> filterList)
     {
@@ -57,7 +57,7 @@ public class FilterTable
             listSQL.Add(string.Format("INSERT INTO Filters (Category, Item, Indicator, Value) VALUES ('{0}', '{1}', '{2}', {3} )",
             record.Category.ToString(), record.Item.ToString(), record.Indicator, record.Value.ToString()));
         }
-        return Sqlite.ExecNonQueryRange(listSQL);
+        return Sqlite.ExecNonQueryRange(Global.dbpath, listSQL);
     }
     public int Add(object rec)
     {
@@ -65,7 +65,7 @@ public class FilterTable
         FilterTable record = rec as FilterTable;
         string sql = string.Format("INSERT INTO Filters (Category, Item, Indicator, Value) VALUES ('{0}', '{1}', '{2}', {3} )",
                         record.Category.ToString(), record.Item.ToString(), record.Indicator, record.Value.ToString());
-        return Sqlite.ExecNonQuery(sql);
+        return Sqlite.ExecNonQuery(Global.dbpath, sql);
     }
 
 }

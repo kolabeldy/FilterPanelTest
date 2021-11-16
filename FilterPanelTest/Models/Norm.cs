@@ -23,7 +23,7 @@ public class Norm
         string sql = "SELECT Id, IdCostCenter, IdProduct, IdER, K, NormWinter, NormSummer, DateStart, DateEnd, IdProducer FROM Norms ORDER BY Id";
 
         DataTable dt = new DataTable();
-        dt = Sqlite.Select(sql);
+        dt = Sqlite.Select(Global.dbpath, sql);
         list = (from DataRow dr in dt.Rows
                 select new Norm()
                 {

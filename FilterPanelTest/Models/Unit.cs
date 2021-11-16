@@ -14,7 +14,7 @@ public class Unit : IDBModel
         string sql = "SELECT Id, Name, K FROM Units ORDER BY Id";
 
         DataTable dt = new DataTable();
-        dt = Sqlite.Select(sql);
+        dt = Sqlite.Select(Global.dbpath, sql);
         list = (from DataRow dr in dt.Rows
                 select new Unit()
                 {
@@ -30,12 +30,12 @@ public class Unit : IDBModel
         if (rec == null) return -1;
         Unit record = rec as Unit;
         string sql = "INSERT INTO Units (Id, Name, K) VALUES (" + record.Id.ToString() + ", '" + record.Name + "'" + ", '" + record.K + " )";
-        return Sqlite.ExecNonQuery(sql);
+        return Sqlite.ExecNonQuery(Global.dbpath, sql);
     }
     public int Delete(string where)
     {
         string sql = "Delete FROM Units WHERE " + where;
-        return Sqlite.ExecNonQuery(sql);
+        return Sqlite.ExecNonQuery(Global.dbpath, sql);
     }
     public int Update(object rec)
     {
@@ -44,7 +44,7 @@ public class Unit : IDBModel
         string sql = "UPDATE Units SET (Name, K) = ( " + "'" + record.Name + "'" + ", '" + record.K + " )"
                         + "WHERE Id = " + record.Id.ToString();
 
-        return Sqlite.ExecNonQuery(sql);
+        return Sqlite.ExecNonQuery(Global.dbpath, sql);
     }
 
 }

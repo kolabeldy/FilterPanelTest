@@ -15,7 +15,7 @@ public class Tariff : IDBModel
         string sql = "SELECT Id, Name, Value, IdUnit FROM Tariffs ORDER BY Id";
 
         DataTable dt = new DataTable();
-        dt = Sqlite.Select(sql);
+        dt = Sqlite.Select(Global.dbpath, sql);
         list = (from DataRow dr in dt.Rows
                 select new Tariff()
                 {
@@ -33,12 +33,12 @@ public class Tariff : IDBModel
         Tariff record = rec as Tariff;
         string sql = "INSERT INTO Tariffs (Id, Name, Value, IdUnit) VALUES ("
             + record.Id.ToString() + ", '" + record.Name + "'" + ", '" + record.Value + ", '" + record.IdUnit + " )";
-        return Sqlite.ExecNonQuery(sql);
+        return Sqlite.ExecNonQuery(Global.dbpath, sql);
     }
     public int Delete(string where)
     {
         string sql = "Delete FROM Tariffs WHERE " + where;
-        return Sqlite.ExecNonQuery(sql);
+        return Sqlite.ExecNonQuery(Global.dbpath, sql);
     }
     public int Update(object rec)
     {
@@ -47,7 +47,7 @@ public class Tariff : IDBModel
         string sql = "UPDATE Tariffs SET (Name, Value, IdUnit) = ( " + "'" + record.Name + "'" + ", '" + record.Value + record.IdUnit + " )"
                         + "WHERE Id = " + record.Id.ToString();
 
-        return Sqlite.ExecNonQuery(sql);
+        return Sqlite.ExecNonQuery(Global.dbpath, sql);
     }
 
 }

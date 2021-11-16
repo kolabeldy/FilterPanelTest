@@ -1,6 +1,6 @@
 ﻿namespace FilterPanelTest.Models;
 
-public class EnergyResource : INotifyPropertyChanged, IDBModel
+public class EnergyResource : BaseViewModel, IDBModel
 {
     public int Id { get; set; }
 
@@ -51,7 +51,7 @@ public class EnergyResource : INotifyPropertyChanged, IDBModel
         string sql = "SELECT Id, IdGroup, Name, ShortName, IdUnit, IsMain, IsActual, IsPrime FROM EnergyResources " + whereStr + " ORDER BY Id";
 
         DataTable dt = new DataTable();
-        dt = Sqlite.Select(sql);
+        dt = Sqlite.Select(Global.dbpath, sql);
         list = (from DataRow dr in dt.Rows
                 select new EnergyResource()
                 {
@@ -76,12 +76,12 @@ public class EnergyResource : INotifyPropertyChanged, IDBModel
                         + record.Id.ToString() + ", " + record.IdGroup.ToString() + ", '" + record.Name + "'" + ", '"
                         + record.ShortName + "'" + ", " + record.IdUnit.ToString() + ", " + record.IsMain.ToString() + ", "
                         + record.IsActual.ToString() + ", " + record.IsPrime.ToString() + ")";
-        return Sqlite.ExecNonQuery(sql);
+        return Sqlite.ExecNonQuery(Global.dbpath, sql);
     }
     public int Delete(string where)
     {
         string sql = "Delete FROM EnergyResources WHERE " + where;
-        return Sqlite.ExecNonQuery(sql);
+        return Sqlite.ExecNonQuery(Global.dbpath, sql);
     }
     public int Update(object rec)
     {
@@ -93,26 +93,6 @@ public class EnergyResource : INotifyPropertyChanged, IDBModel
                         + record.IsActual.ToString() + ", " + record.IsPrime.ToString() + ")"
                         + "WHERE Id = " + record.Id.ToString();
 
-        return Sqlite.ExecNonQuery(sql);
+        return Sqlite.ExecNonQuery(Global.dbpath, sql);
     }
-
-    #region INotifyProperty
-
-    public event PropertyChangedEventHandler PropertyChanged;
-    public void OnPropertyChanged([CallerMemberName] string prop = "")
-    {
-        if (PropertyChanged != null)
-            PropertyChanged(this, new PropertyChangedEventArgs(prop));
-    }
-    protected bool Set<T>(ref T field, T value, [CallerMemberName] string PropertyName = null)
-    {
-        if (EqualityComparer<T>.Default.Equals(field, value)) return false;
-        field = value;
-        OnPropertyChanged(PropertyName);
-        return true;
-    }
-
-
-    #endregion
-
 }

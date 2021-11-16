@@ -15,8 +15,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\MyServicesLibrary\MyServicesLibrary.csproj" />
-		<ProjectReference Include="..\MyDataAccessLibrary\MyDataAccessLibrary.csproj" />
+	  <ProjectReference Include="..\..\MyLibraries\MyServicesLibrary\MyServicesLibrary.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
