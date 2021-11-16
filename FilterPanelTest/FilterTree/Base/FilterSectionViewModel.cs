@@ -11,24 +11,24 @@ public abstract class FilterSectionViewModel : BaseViewModel
 
 
     #region Properties
+
     public ObservableCollection<TreeFamily> FilterTreeItems { get; set; }
     public string Tittle { get; set; } = "Title";
     public List<TreePerson> FilterList { get; set; }
+
     #endregion
 
     #region Observable Properties
 
-    private bool popupIsOpen = false;
-    public bool PopupIsOpen
+    protected bool isClosePress = false;
+
+    protected bool _IsFilterPopupOpen = false;
+    public bool IsFilterPopupOpen
     {
-        get
-        {
-            return popupIsOpen;
-        }
+        get => _IsFilterPopupOpen;
         set
         {
-            popupIsOpen = value;
-            if (value == false)
+            if (isClosePress)
             {
                 List<TreePerson> tmpList = new List<TreePerson>();
                 tmpList = PersonListFill();
@@ -39,33 +39,27 @@ public abstract class FilterSectionViewModel : BaseViewModel
                     SelectedText = RetSelected();
                     onChange();
                 }
+                Set(ref _IsFilterPopupOpen, value);
             }
-            OnPropertyChanged("PopupIsOpen");
+            else Set(ref _IsFilterPopupOpen, true);
         }
     }
 
-    private string selectedText;
+    protected string _SelectedText;
     public string SelectedText
     {
         get
         {
-            return selectedText;
+            return _SelectedText;
         }
         set
         {
-            selectedText = value;
-            OnPropertyChanged("SelectedText");
+            Set(ref _SelectedText, value);
         }
     }
 
     #endregion
 
-    #region private Fields
-
-    protected TreeInitType treeInitType;
-    private int filterListAllCount;
-
-    #endregion
     public FilterSectionViewModel()
     {
         FilterTreeItems = new ObservableCollection<TreeFamily>();
@@ -75,16 +69,15 @@ public abstract class FilterSectionViewModel : BaseViewModel
     #region Methods
     public void Init(string tittle = null, TreeInitType treeInitType = TreeInitType.All)
     {
-        this.treeInitType = treeInitType;
-        this.Tittle = tittle;
-
-        FilterTreeItems = FamiliesInit(RetTreeFamilies());
+        Tittle = tittle;
+        FilterTreeItems = FamiliesInit(RetTreeFamilies(), treeInitType);
         FilterList = PersonListFill();
         SelectedText = RetSelected();
         onChange();
     }
 
-    public ObservableCollection<TreeFamily> FamiliesInit(ObservableCollection<TreeFamily> families)
+    protected int filterListAllCount;
+    public ObservableCollection<TreeFamily> FamiliesInit(ObservableCollection<TreeFamily> families, TreeInitType treeInitType = TreeInitType.All)
     {
         filterListAllCount = 0;
         foreach (TreeFamily family in families)
@@ -156,48 +149,41 @@ public abstract class FilterSectionViewModel : BaseViewModel
         }
         return false;
     }
-    protected void SelectAll()
-    {
-        foreach (TreeFamily family in FilterTreeItems)
-            foreach (var person in family.Members)
-            {
-                ItemHelper.SetIsChecked(person, true);
-            }
-    }
-    protected void UnselectAll()
-    {
-        foreach (TreeFamily family in FilterTreeItems)
-            foreach (var person in family.Members)
-            {
-                ItemHelper.SetIsChecked(person, false);
-            }
-    }
 
-    private RelayCommand selectAll_Command;
+    protected RelayCommand _SelectAll_Command;
     public RelayCommand SelectAll_Command
     {
         get
         {
-            return selectAll_Command ??
-                (selectAll_Command = new RelayCommand(obj =>
+            return _SelectAll_Command ??
+                (_SelectAll_Command = new RelayCommand(obj =>
                 {
-                    SelectAll();
+                    foreach (TreeFamily family in FilterTreeItems)
+                        foreach (var person in family.Members)
+                        {
+                            ItemHelper.SetIsChecked(person, true);
+                        }
                 }));
         }
     }
 
-    private RelayCommand unselectAll_Command;
+    protected RelayCommand _UnselectAll_Command;
     public RelayCommand UnselectAll_Command
     {
         get
         {
-            return unselectAll_Command ??
-                (unselectAll_Command = new RelayCommand(obj =>
+            return _UnselectAll_Command ??
+                (_UnselectAll_Command = new RelayCommand(obj =>
                 {
-                    UnselectAll();
+                    foreach (TreeFamily family in FilterTreeItems)
+                        foreach (var person in family.Members)
+                        {
+                            ItemHelper.SetIsChecked(person, false);
+                        }
                 }));
         }
     }
+
     protected RelayCommand _FilterPanelClose_Command;
     public RelayCommand FilterPanelClose_Command
     {
@@ -210,30 +196,12 @@ public abstract class FilterSectionViewModel : BaseViewModel
                 }));
         }
     }
-
-
-    protected bool isClosePress = false;
-
-    protected bool _IsFilterPopupOpen = false;
-    public bool IsFilterPopupOpen
-    {
-        get => _IsFilterPopupOpen;
-        set
-        {
-            if (isClosePress)
-                Set(ref _IsFilterPopupOpen, value);
-            else Set(ref _IsFilterPopupOpen, true);
-        }
-    }
-
     protected void Close()
     {
         isClosePress = true;
         IsFilterPopupOpen = false;
         isClosePress = false;
     }
-
-
 
     #endregion
 }

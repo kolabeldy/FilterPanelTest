@@ -1,7 +1,7 @@
 ﻿namespace FilterPanelTest.FilterTree;
 public class FilterSectionPeriodViewModel : FilterSectionViewModel
 {
-    public event IsFilterPanelClosed OnFilterPanelClosed;
+    //public event IsFilterPanelClosed OnFilterPanelClosed;
 
     public override ObservableCollection<TreeFamily> RetTreeFamilies()
     {

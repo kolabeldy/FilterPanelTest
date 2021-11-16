@@ -15,38 +15,37 @@
     d:DesignHeight="42"
     d:DesignWidth="170"
     mc:Ignorable="d">
-
-    <StackPanel Name="FilterTitle"
-                IsEnabled="True"
-                Background="Transparent"
-                TextElement.Foreground="White" 
-                Orientation="Horizontal"
-                Visibility="Visible">
-        <TextBlock Margin="10,0,10,0"
-                   VerticalAlignment="Center"
-                   FontWeight="Light"
-                   FontSize="11"
-                   Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                   Text="{Binding Tittle}" />
-        <TextBox Margin="0,0,-5,0"
-                 VerticalAlignment="Center"
-                 FontSize="15"
-                 FontWeight="DemiBold"
-                 IsReadOnly="True"
-                 Style="{StaticResource MaterialDesignComboBoxEditableTextBox}"
-                 Text="{Binding SelectedText}" 
-                 Cursor="IBeam" />
-        <materialDesign:PopupBox x:Name="PopupBox"
-                                 IsPopupOpen="{Binding IsFilterPopupOpen, Mode=TwoWay}"
-                                 PlacementMode="BottomAndAlignRightEdges"
-                                 StaysOpen="True">
+    <GroupBox Name="FilterTitle" 
+              IsEnabled="True" 
+              Style="{x:Null}" 
+              Foreground="White" 
+              Background="Transparent"
+              BorderThickness="0.4"
+              BorderBrush="DarkGray"
+              Margin="0,3,0,6" 
+              Height="50">
+        <GroupBox.Header>
+            <TextBlock Text="{Binding Tittle}"
+                     Style="{StaticResource MaterialDesignOverlineTextBlock}"/>
+        </GroupBox.Header>
+    <StackPanel Orientation="Horizontal">
+            <TextBlock Margin="8,0,0,-4"
+                       VerticalAlignment="Bottom"
+                       MinWidth="120"
+                       Style="{StaticResource MaterialDesignBody1TextBlock}"
+                       Text="{Binding SelectedText}" />
+            <materialDesign:PopupBox x:Name="PopupBox"
+                                     VerticalAlignment="Bottom"
+                                     Margin="20,0,0,-2"
+                                     IsPopupOpen="{Binding IsFilterPopupOpen, Mode=TwoWay}"
+                                     PlacementMode="BottomAndAlignRightEdges"
+                                     StaysOpen="True">
             <Border BorderBrush="{StaticResource PrimaryHueLightBrush}"
                     Margin="5,0,5,-3"
                     Background="{DynamicResource MaterialDesignPaper}"
                     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
                     MaxHeight="600"
                     MinWidth="150"
-                    MaxWidth="{Binding ElementName=FilterTitle, Path=ActualWidth}"
                     BorderThickness="1">
                 <Grid >
                     <Grid.RowDefinitions>
@@ -85,12 +84,13 @@
                             </StackPanel>
                             <Button Grid.Column="1"
                                     Content="{materialDesign:PackIcon CheckBold}" 
-                                    HorizontalAlignment="Stretch"
+                                    HorizontalAlignment="Right"
                                     ToolTip="Принять и закрыть"
                                     HorizontalContentAlignment="Center"
                                     Padding="2"
                                     Margin="0,5,5,5"
                                     Height="20"
+                                    Width="60"
                                     Style="{StaticResource MaterialDesignFlatButton}"
                                     VerticalAlignment="Center"
                                     Command="{Binding FilterPanelClose_Command}"/>
@@ -127,4 +127,5 @@
         </materialDesign:PopupBox>
        
     </StackPanel>
+    </GroupBox>
 </UserControl>

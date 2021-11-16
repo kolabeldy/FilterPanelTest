@@ -6,8 +6,12 @@ public class MainWindowModel : BaseViewModel
     private List<TreePerson> filterDateList;
 
     public FilterSection FilterDate { get; set; }
+    public FilterSection FilterCC { get; set; }
+
 
     private FilterSectionPeriodViewModel modelDate;
+    private FilterSectionCostCentersViewModel modelCC;
+
     public bool FiltersIsChanged;
 
 
@@ -160,6 +164,12 @@ public class MainWindowModel : BaseViewModel
         modelDate.onChange += FilterDateOnChangeHandler;
         modelDate.Init("Период:", TreeInitType.Last);
         FilterDate = new FilterSection(modelDate);
+
+        modelCC = new FilterSectionCostCentersViewModel();
+        modelCC.onChange += FilterDateOnChangeHandler;
+        modelCC.Init("Центры затрат:", TreeInitType.All);
+        FilterCC = new FilterSection(modelCC);
+
     }
     private void FilterDateOnChangeHandler()
     {

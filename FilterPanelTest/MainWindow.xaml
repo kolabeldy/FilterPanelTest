@@ -13,7 +13,7 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="560" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Height="800" Width="1000" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -24,7 +24,7 @@
                     VerticalAlignment="Top"
                     HorizontalAlignment="Stretch"
                     Orientation="Horizontal">
-            <TextBlock Text="Filter"
+            <!--<TextBlock Text="Filter"
                        Foreground="White"
                        Margin="10" />
             <md:PopupBox Name="FilterPopup"
@@ -37,10 +37,14 @@
                          IsPopupOpen="{Binding IsFilterPopupOpen}">
                 <UserControl x:Name="FilterPanel" 
                              Content="{Binding FilterPanel}"/>
-            </md:PopupBox>
+            </md:PopupBox>-->
             <UserControl x:Name="FilterDatePanel" 
                          Content="{Binding FilterDate}"  
-                         Margin="10,0,0,0" 
+                         Margin="100,0,0,0" 
+                         VerticalAlignment="Center" />
+            <UserControl x:Name="FilterCCPanel" 
+                         Content="{Binding FilterCC}"  
+                         Margin="20,0,0,0" 
                          VerticalAlignment="Center" />
         </StackPanel>
         <StackPanel Grid.Row="1"
