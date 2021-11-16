@@ -23,6 +23,8 @@ global using FilterPanelTest.Filter.Partials;
 global using FilterPanelTest.Models.Base;
 global using FilterPanelTest.FilterTree.Base;
 global using FilterPanelTest.FilterTree;
+global using FilterPanelTest.Filter;
+
 //global using FilterPanelTest.Filter;
 //global using FilterPanelTest.ViewModels;
 //global using FilterPanelTest.ViewModels.AnalysisTabs;
@@ -35,11 +37,13 @@ global using MyServicesLibrary.Helpers;
 //global using MyUserControlsLibrary.CaptionCard;
 global using MyServicesLibrary.Infrastructure.MessageBoxes;
 global using MyServicesLibrary.DataAccess;
-global using MyCheckedTreeLibrary;
-
+global using MyControlsLibrary.CheckedTree;
 
 namespace FilterPanelTest;
 public enum SelectChoise { All, True, False }
+public delegate void IsFilterChanged(FilterSet filterSet);
+public delegate void IsFilterPanelClosed();
+
 public static class Global
 {
     public static string dbpath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "db\\emdb.db");

@@ -1,6 +1,8 @@
 ﻿namespace FilterPanelTest.FilterTree;
 public class FilterSectionDateViewModel : FilterSectionViewModel
 {
+    public event IsFilterPanelClosed OnFilterPanelClosed;
+
     public override ObservableCollection<TreeFamily> RetTreeFamilies()
     {
         int periodFirst = Period.MinPeriod;
@@ -56,6 +58,5 @@ public class FilterSectionDateViewModel : FilterSectionViewModel
             return rez2;
         }
     }
-
 
 }

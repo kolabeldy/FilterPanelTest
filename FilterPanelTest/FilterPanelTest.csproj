@@ -19,8 +19,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\..\MyLibraries\MyControlsLibrary\MyControlsLibrary\MyControlsLibrary.csproj" />
 	  <ProjectReference Include="..\..\MyLibraries\MyServicesLibrary\MyServicesLibrary.csproj" />
-	  <ProjectReference Include="..\MyCheckedTree\MyCheckedTreeLibrary.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

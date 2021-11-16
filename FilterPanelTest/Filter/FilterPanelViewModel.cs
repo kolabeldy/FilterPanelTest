@@ -1,10 +1,10 @@
 ﻿using MyServicesLibrary.Helpers;
 
 namespace FilterPanelTest.Filter;
-public delegate void IsFilterChanged(FilterSet filterSet);
-public delegate void IsFilterPanelClosed();
+//public delegate void IsFilterChanged(FilterSet filterSet);
+//public delegate void IsFilterPanelClosed();
 
-public class FilterPanelViewModel
+public class FilterPanelViewModel : BaseViewModel
 {
     public event IsFilterPanelClosed OnFilterPanelClosed;
     public event IsFilterChanged OnFilterChanged;
@@ -160,26 +160,4 @@ public class FilterPanelViewModel
         if (isChanged) Refresh();
         OnFilterPanelClosed();
     }
-
-
-    #region INotifyProperty
-
-    public event PropertyChangedEventHandler PropertyChanged;
-    public void OnPropertyChanged([CallerMemberName] string prop = "")
-    {
-        if (PropertyChanged != null)
-            PropertyChanged(this, new PropertyChangedEventArgs(prop));
-    }
-    protected bool Set<T>(ref T field, T value, [CallerMemberName] string PropertyName = null)
-    {
-        if (EqualityComparer<T>.Default.Equals(field, value)) return false;
-        field = value;
-        OnPropertyChanged(PropertyName);
-        return true;
-    }
-
-
-    #endregion
-
-
 }

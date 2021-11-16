@@ -1,9 +1,10 @@
-﻿using MyServicesLibrary.Helpers;
+﻿using MyControlsLibrary.CheckedTree;
+using MyServicesLibrary.Helpers;
 
 namespace FilterPanelTest.FilterTree.Base;
 public enum TreeInitType { First, Last, All, None, Losses }
 
-public abstract class FilterSectionViewModel : INotifyPropertyChanged
+public abstract class FilterSectionViewModel : BaseViewModel
 {
     public delegate void IsChangeMetodContainer();
     public event IsChangeMetodContainer onChange;
@@ -197,18 +198,42 @@ public abstract class FilterSectionViewModel : INotifyPropertyChanged
                 }));
         }
     }
-
-
-
-    #endregion
-
-    #region INotifyPropertyChanged
-    public event PropertyChangedEventHandler PropertyChanged;
-    public void OnPropertyChanged([CallerMemberName] string prop = "")
+    protected RelayCommand _FilterPanelClose_Command;
+    public RelayCommand FilterPanelClose_Command
     {
-        if (PropertyChanged != null)
-            PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        get
+        {
+            return _FilterPanelClose_Command ??
+                (_FilterPanelClose_Command = new RelayCommand(obj =>
+                {
+                    Close();
+                }));
+        }
     }
+
+
+    protected bool isClosePress = false;
+
+    protected bool _IsFilterPopupOpen = false;
+    public bool IsFilterPopupOpen
+    {
+        get => _IsFilterPopupOpen;
+        set
+        {
+            if (isClosePress)
+                Set(ref _IsFilterPopupOpen, value);
+            else Set(ref _IsFilterPopupOpen, true);
+        }
+    }
+
+    protected void Close()
+    {
+        isClosePress = true;
+        IsFilterPopupOpen = false;
+        isClosePress = false;
+    }
+
+
 
     #endregion
 }
