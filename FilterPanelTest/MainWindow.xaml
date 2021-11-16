@@ -19,11 +19,14 @@
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0"
-                    Background="{StaticResource PrimaryHueMidBrush}"
-                    VerticalAlignment="Top"
-                    HorizontalAlignment="Stretch"
-                    Orientation="Horizontal">
+        <md:Card Grid.Row="0"
+                 Margin="7,-10,7,0"
+                 Background="{StaticResource PrimaryHueMidBrush}"
+                 Padding="0,10,0,0"
+                 UniformCornerRadius="10"
+                 VerticalAlignment="Top"
+                 HorizontalAlignment="Stretch">
+        <StackPanel Orientation="Horizontal">
             <!--<TextBlock Text="Filter"
                        Foreground="White"
                        Margin="10" />
@@ -46,7 +49,12 @@
                          Content="{Binding FilterCC}"  
                          Margin="20,0,0,0" 
                          VerticalAlignment="Center" />
-        </StackPanel>
+                <UserControl x:Name="FilterERPanel" 
+                         Content="{Binding FilterER}"  
+                         Margin="20,0,0,0" 
+                         VerticalAlignment="Center" />
+            </StackPanel>
+        </md:Card>
         <StackPanel Grid.Row="1"
                     Margin="0,50">
             <Label Margin="50,10"

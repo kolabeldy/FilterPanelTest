@@ -7,10 +7,12 @@ public class MainWindowModel : BaseViewModel
 
     public FilterSection FilterDate { get; set; }
     public FilterSection FilterCC { get; set; }
+    public FilterSection FilterER { get; set; }
 
 
     private FilterSectionPeriodViewModel modelDate;
     private FilterSectionCostCentersViewModel modelCC;
+    private FilterSectionEnergyResourcesViewModel modelER;
 
     public bool FiltersIsChanged;
 
@@ -170,6 +172,10 @@ public class MainWindowModel : BaseViewModel
         modelCC.Init("Центры затрат:", TreeInitType.All);
         FilterCC = new FilterSection(modelCC);
 
+        modelER = new FilterSectionEnergyResourcesViewModel();
+        modelER.onChange += FilterDateOnChangeHandler;
+        modelER.Init("Энергоресурсы:", TreeInitType.All);
+        FilterER = new FilterSection(modelER);
     }
     private void FilterDateOnChangeHandler()
     {
