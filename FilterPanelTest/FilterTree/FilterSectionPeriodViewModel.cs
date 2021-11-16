@@ -1,5 +1,5 @@
 ﻿namespace FilterPanelTest.FilterTree;
-public class FilterSectionDateViewModel : FilterSectionViewModel
+public class FilterSectionPeriodViewModel : FilterSectionViewModel
 {
     public event IsFilterPanelClosed OnFilterPanelClosed;
 

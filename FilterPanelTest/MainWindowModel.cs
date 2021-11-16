@@ -7,7 +7,7 @@ public class MainWindowModel : BaseViewModel
 
     public FilterSection FilterDate { get; set; }
 
-    private FilterSectionDateViewModel modelDate;
+    private FilterSectionPeriodViewModel modelDate;
     public bool FiltersIsChanged;
 
 
@@ -156,7 +156,7 @@ public class MainWindowModel : BaseViewModel
     }
     private void NewFilterInit()
     {
-        modelDate = new FilterSectionDateViewModel();
+        modelDate = new FilterSectionPeriodViewModel();
         modelDate.onChange += FilterDateOnChangeHandler;
         modelDate.Init("Период:", TreeInitType.Last);
         FilterDate = new FilterSection(modelDate);
