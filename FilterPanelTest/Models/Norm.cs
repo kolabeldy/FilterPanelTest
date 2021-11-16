@@ -23,7 +23,7 @@ public class Norm
         string sql = "SELECT Id, IdCostCenter, IdProduct, IdER, K, NormWinter, NormSummer, DateStart, DateEnd, IdProducer FROM Norms ORDER BY Id";
 
         DataTable dt = new DataTable();
-        dt = Sqlite.Select(sql);
+        dt = Sqlite.Select(Global.dbpath, sql);
         list = (from DataRow dr in dt.Rows
                 select new Norm()
                 {
@@ -48,12 +48,12 @@ public class Norm
     //        + String.Format("VALUES ( {0}, {1}, {2}, {3}, {4}, {5}, {6}, {7} )", 
     //        Record.IdCostCenter.ToString(), Record.IdProduct.ToString(), Record.IdER.ToString(), Record.K.ToString(),
     //        Record.NormWinter.ToString(), Record.NormSummer.ToString(), Record.DateStart.ToString(), Record.IdProducer.ToString());
-    //    return Sqlite.ExecNonQuery(sql);
+    //    return Sqlite.ExecNonQuery(Global.dbpath, sql);
     //}
     //public int Delete(string where)
     //{
     //    string sql = "Delete FROM Norms WHERE " + where;
-    //    return Sqlite.ExecNonQuery(sql);
+    //    return Sqlite.ExecNonQuery(Global.dbpath, sql);
     //}
     //public int Update()
     //{
@@ -63,7 +63,7 @@ public class Norm
     //            Record.IdCostCenter.ToString(), Record.IdProduct.ToString(), Record.IdER.ToString(), Record.K.ToString(),
     //            Record.NormWinter.ToString(), Record.NormSummer.ToString(), Record.DateStart.ToString(), Record.IdProducer.ToString()) + " "
     //        + "WHERE Id = " + Record.Id.ToString();
-    //    return Sqlite.ExecNonQuery(sql);
+    //    return Sqlite.ExecNonQuery(Global.dbpath, sql);
     //}
 
 

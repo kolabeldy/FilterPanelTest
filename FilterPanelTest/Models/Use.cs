@@ -38,7 +38,7 @@ public class Use
         string sql = "SELECT Period, IdCC, IdProduct, ProductName, IdER, ERFact, ERPlan FROM ERUses " + whereStr + " ORDER BY Period";
 
         DataTable dt = new DataTable();
-        dt = Sqlite.Select(sql);
+        dt = Sqlite.Select(Global.dbpath, sql);
 
         return (from DataRow dr in dt.Rows
                 select new UseValue()

@@ -20,7 +20,7 @@ public class Product : IdName, IDBModel
         string sql = "SELECT Id, Name, IdCC, IdUnit FROM Products ORDER BY Id";
 
         DataTable dt = new DataTable();
-        dt = Sqlite.Select(sql);
+        dt = Sqlite.Select(Global.dbpath, sql);
         list = (from DataRow dr in dt.Rows
                 select new Product()
                 {
@@ -71,13 +71,13 @@ public class Product : IdName, IDBModel
             Product record = rec as Product;
             string sql = String.Format("INSERT INTO Products (Id, Name, IdCC, IdUnit) VALUES ( {0}, {1}, {2}, {3} )",
                                         record.Id.ToString(), record.Name, record.CostCenter.Id.ToString(), record.IdUnit.ToString());
-            return Sqlite.ExecNonQuery(sql);
+            return Sqlite.ExecNonQuery(Global.dbpath, sql);
         }
     }
     public int Delete(string where)
     {
         string sql = "Delete FROM Products WHERE " + where;
-        return Sqlite.ExecNonQuery(sql);
+        return Sqlite.ExecNonQuery(Global.dbpath, sql);
     }
     public int Update(object rec)
     {
@@ -86,6 +86,6 @@ public class Product : IdName, IDBModel
         string sql = string.Format("UPDATE Products SET (Name, IdCC, IdUnit) = ({0}, {1}, {2}) WHERE Id = {3}",
                          record.Name, record.CostCenter.Id, record.IdUnit.ToString(), record.Id.ToString());
 
-        return Sqlite.ExecNonQuery(sql);
+        return Sqlite.ExecNonQuery(Global.dbpath, sql);
     }
 }

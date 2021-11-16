@@ -1,4 +1,6 @@
-﻿namespace FilterPanelTest.FilterTree.Base;
+﻿using MyServicesLibrary.Helpers;
+
+namespace FilterPanelTest.FilterTree.Base;
 public enum TreeInitType { First, Last, All, None, Losses }
 
 public abstract class FilterSectionViewModel : INotifyPropertyChanged

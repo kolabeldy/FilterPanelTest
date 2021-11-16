@@ -171,7 +171,7 @@ public class Period : INotifyPropertyChanged, IDBModel
         string sql = "SELECT Period FROM ERUsesMonth GROUP BY Period ORDER BY Period DESC";
 
         DataTable dt = new DataTable();
-        dt = Sqlite.Select(sql);
+        dt = Sqlite.Select(Global.dbpath, sql);
         list = (from DataRow dr in dt.Rows
                 select new Period()
                 {
@@ -188,13 +188,13 @@ public class Period : INotifyPropertyChanged, IDBModel
         //string sql = "INSERT INTO CostCenters (Id, Name, IsMain, IsTechnology, IsActual) VALUES ("
         //                + record.Id.ToString() + ", '" + record.Name + "'" + ", " + record.IsMain.ToString() + ", "
         //                + record.IsTechnology.ToString() + ", " + record.IsActual.ToString() + ")";
-        //return Sqlite.ExecNonQuery(sql);
+        //return Sqlite.ExecNonQuery(Global.dbpath, sql);
         return 0;
     }
     public int Delete(string whereStr)
     {
         //string sql = "Delete FROM CostCenters WHERE " + whereStr;
-        //return Sqlite.ExecNonQuery(sql);
+        //return Sqlite.ExecNonQuery(Global.dbpath, sql);
         return 0;
     }
     public int Update(object rec)
@@ -206,7 +206,7 @@ public class Period : INotifyPropertyChanged, IDBModel
         //                + ", " + record.IsTechnology.ToString() + ", " + record.IsActual.ToString() + ")"
         //                + "WHERE Id = " + record.Id.ToString();
 
-        //return Sqlite.ExecNonQuery(sql);
+        //return Sqlite.ExecNonQuery(Global.dbpath, sql);
         return 0;
     }
 
