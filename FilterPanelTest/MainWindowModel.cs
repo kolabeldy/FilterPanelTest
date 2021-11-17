@@ -76,11 +76,6 @@ public class MainWindowModel : BaseViewModel
 
     public MainWindowModel(bool periodVisible, bool ccVisible, bool erVisible, bool ntVisible)
     {
-        NewFilterInit();
-    }
-
-    private void NewFilterInit()
-    {
         modelDate = new FilterSectionViewModel();
         modelDate.onChange += FilterDateOnChangeHandler;
         modelDate.Init("Период:", RetPeriodTreeFamilies(), TreeInitType.Last);
