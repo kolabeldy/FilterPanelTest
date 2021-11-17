@@ -1,7 +1,7 @@
 ﻿namespace FilterPanelTest.Models;
 
 public enum MonthOutputStyle { AsNumeric, AsString };
-public class Period : INotifyPropertyChanged, IDBModel
+public class Period : IdName, INotifyPropertyChanged, IDBModel
 {
     private int _Id;
     public int Id

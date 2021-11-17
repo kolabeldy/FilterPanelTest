@@ -1,6 +1,7 @@
 ﻿namespace FilterPanelTest.Models;
 public class CostCenter : IdName, IDBModel
 {
+    #region Properties
     public bool IsMain { get; set; }
     public bool IsActual { get; set; }
     public bool IsTechnology { get; set; }
@@ -13,6 +14,8 @@ public class CostCenter : IdName, IDBModel
     public static List<CostCenter> TechMainList { get; set; } = new List<CostCenter>();
     public static List<CostCenter> TechOtherList { get; set; } = new List<CostCenter>();
     public static List<CostCenter> SlaveList { get; set; } = new List<CostCenter>();
+
+    #endregion
 
     #region Methods
     public void Init()
@@ -33,6 +36,10 @@ public class CostCenter : IdName, IDBModel
         this.SelectedTechnology = SelectedTechnology;
         return Get<CostCenter>();
     }
+
+    #endregion
+
+    #region Реализация интерфейса IDBModel
     public List<T> Get<T>()
     {
         List<T> result = new();
@@ -43,10 +50,6 @@ public class CostCenter : IdName, IDBModel
         string isTechnologyStr = SelectedTechnology == SelectChoise.All ? "" : SelectedTechnology == SelectChoise.True ? " AND isTechnology = 1" : " AND isTechnology = 0";
         string whereStr = "WHERE True" + isActualStr + isMainStr + isTechnologyStr;
         string sql = "SELECT Id, Name, IsMain, IsActual, IsTechnology FROM CostCenters " + whereStr + " ORDER BY Id";
-
-
-        //var resourceManager = Properties.Resources.ResourceManager;
-        //string sql = resourceManager.GetString("sqlCostCenters_ToList").Replace("#whereStr", whereStr);
 
         DataTable dt = new DataTable();
         dt = Sqlite.Select(Global.dbpath, sql);
@@ -88,4 +91,5 @@ public class CostCenter : IdName, IDBModel
         return Sqlite.ExecNonQuery(Global.dbpath, sql);
     }
     #endregion
+
 }

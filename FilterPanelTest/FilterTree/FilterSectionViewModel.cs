@@ -1,10 +1,7 @@
-﻿using MyControlsLibrary.CheckedTree;
-using MyServicesLibrary.Helpers;
-
-namespace FilterPanelTest.FilterTree.Base;
+﻿namespace FilterPanelTest.FilterTree;
 public enum TreeInitType { First, Last, All, None, Losses }
 
-public abstract class FilterSectionViewModel : BaseViewModel
+public class FilterSectionViewModel : BaseViewModel
 {
     public delegate void IsChangeMetodContainer();
     public event IsChangeMetodContainer onChange;
@@ -67,10 +64,10 @@ public abstract class FilterSectionViewModel : BaseViewModel
     }
 
     #region Methods
-    public void Init(string tittle = null, TreeInitType treeInitType = TreeInitType.All)
+    public void Init(string tittle, ObservableCollection<TreeFamily> filterTree, TreeInitType treeInitType = TreeInitType.All)
     {
         Tittle = tittle;
-        FilterTreeItems = FamiliesInit(RetTreeFamilies(), treeInitType);
+        FilterTreeItems = FamiliesInit(filterTree, treeInitType);
         FilterList = PersonListFill();
         SelectedText = RetSelected();
         onChange();
@@ -110,7 +107,20 @@ public abstract class FilterSectionViewModel : BaseViewModel
             }
         return families;
     }
-    public abstract ObservableCollection<TreeFamily> RetTreeFamilies();
+    //public abstract ObservableCollection<TreeFamily> RetTreeFamilies();
+    protected List<TreePerson> PList<T>(List<T> tList)
+    {
+        List<IdName> ids = new List<IdName>((IEnumerable<IdName>)tList);
+        List<TreePerson> result = new List<TreePerson>();
+        foreach (IdName r in ids)
+        {
+            TreePerson n = new TreePerson();
+            n.Id = r.Id;
+            n.Name = r.Name;
+            result.Add(n);
+        }
+        return result;
+    }
 
     protected List<TreePerson> PersonListFill()
     {

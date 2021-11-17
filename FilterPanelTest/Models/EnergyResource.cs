@@ -1,12 +1,7 @@
 ﻿namespace FilterPanelTest.Models;
 
-public class EnergyResource : INotifyPropertyChanged, IDBModel
+public class EnergyResource : IdName, IDBModel
 {
-    public int Id { get; set; }
-
-    private string _Name;
-    public string Name { get => _Name; set => Set(ref _Name, value); }
-
     private string _NameFull;
     public string NameFull { get => _NameFull; set => Set(ref _NameFull, value); }
     public int IdGroup { get; set; }
@@ -95,24 +90,4 @@ public class EnergyResource : INotifyPropertyChanged, IDBModel
 
         return Sqlite.ExecNonQuery(Global.dbpath, sql);
     }
-
-    #region INotifyProperty
-
-    public event PropertyChangedEventHandler PropertyChanged;
-    public void OnPropertyChanged([CallerMemberName] string prop = "")
-    {
-        if (PropertyChanged != null)
-            PropertyChanged(this, new PropertyChangedEventArgs(prop));
-    }
-    protected bool Set<T>(ref T field, T value, [CallerMemberName] string PropertyName = null)
-    {
-        if (EqualityComparer<T>.Default.Equals(field, value)) return false;
-        field = value;
-        OnPropertyChanged(PropertyName);
-        return true;
-    }
-
-
-    #endregion
-
 }

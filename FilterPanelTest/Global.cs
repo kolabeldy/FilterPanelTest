@@ -21,7 +21,6 @@ global using FilterPanelTest.Models;
 //global using FilterPanelTest.Views;
 global using FilterPanelTest.Filter.Partials;
 global using FilterPanelTest.Models.Base;
-global using FilterPanelTest.FilterTree.Base;
 global using FilterPanelTest.FilterTree;
 global using FilterPanelTest.Filter;
 
