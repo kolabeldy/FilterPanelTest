@@ -9,12 +9,26 @@
              Background="Transparent"
              FontFamily="{DynamicResource MaterialDesignFont}"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="50" d:DesignWidth="800">
     
     <StackPanel Orientation="Horizontal">
+        <Button ToolTip="Обновить экран"
+                HorizontalContentAlignment="Center"
+                Foreground="White"
+                Height="40"
+                Padding="5"
+                Style="{StaticResource MaterialDesignFlatButton}"
+                VerticalAlignment="Center"
+                Visibility="{Binding RefreshVisible}"
+                Command="{Binding Refresh_Command}">
+            <md:PackIcon
+                Kind="Refresh"
+                Height="25"
+                Width="25" />
+        </Button>
         <UserControl x:Name="FilterDatePanel" 
                      Content="{Binding FilterDate}"  
-                     Margin="20,0,0,0" 
+                     Margin="10,0,0,0" 
                      VerticalAlignment="Center" />
         <UserControl x:Name="FilterCCPanel" 
                      Content="{Binding FilterCC}"  

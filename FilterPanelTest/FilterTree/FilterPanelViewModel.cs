@@ -1,39 +1,30 @@
 ﻿namespace FilterPanelTest.FilterTree;
 public class FilterPanelViewModel : BaseViewModel
 {
-    private List<TreePerson> filterDateList;
-    private List<TreePerson> filterCCList;
-    private List<TreePerson> filterERList;
 
-    public FilterSection FilterDate { get; set; }
-    public FilterSection FilterCC { get; set; }
-    public FilterSection FilterER { get; set; }
+    private bool _FiltersIsChanged = false;
+    public bool FiltersIsChanged
+    {
+        get => _FiltersIsChanged;
+        set
+        {
+            if(value) 
+                RefreshVisible = Visibility.Visible; 
+            else 
+                RefreshVisible = Visibility.Hidden;
+            Set(ref _FiltersIsChanged, value);
+        }
+    }
 
-
-    private FilterSectionViewModel modelDate;
-    private FilterSectionViewModel modelCC;
-    private FilterSectionViewModel modelER;
-
-    public bool FiltersIsChanged;
-
-    //protected bool _IsFilterPopupOpen = false;
-    //public bool IsFilterPopupOpen
-    //{
-    //    get => _IsFilterPopupOpen;
-    //    set
-    //    {
-    //        if (isClosePress)
-    //            Set(ref _IsFilterPopupOpen, value);
-    //        else Set(ref _IsFilterPopupOpen, true);
-    //    }
-    //}
-    //protected bool isClosePress = false;
-    //protected void FilterClose()
-    //{
-    //    isClosePress = true;
-    //    IsFilterPopupOpen = false;
-    //    isClosePress = false;
-    //}
+    private Visibility _RefreshVisible = Visibility.Hidden;
+    public Visibility RefreshVisible
+    {
+        get => _RefreshVisible;
+        set
+        {
+            Set(ref _RefreshVisible, value);
+        }
+    }
 
     private FilterSet _FilterSet;
     public FilterSet FilterSet
@@ -44,7 +35,6 @@ public class FilterPanelViewModel : BaseViewModel
             Set(ref _FilterSet, value);
         }
     }
-
 
     //private List<FilterTable> GetFilters(FilterSet filter)
     //{
@@ -71,6 +61,13 @@ public class FilterPanelViewModel : BaseViewModel
     //    filterTable.Delete("Analysis", "Use");
     //    filterTable.AddRange(GetFilters(filterSet));
     //}
+    public FilterSection FilterDate { get; set; }
+    public FilterSection FilterCC { get; set; }
+    public FilterSection FilterER { get; set; }
+
+    private FilterSectionViewModel modelDate;
+    private FilterSectionViewModel modelCC;
+    private FilterSectionViewModel modelER;
 
     public FilterPanelViewModel()
     {
@@ -89,6 +86,23 @@ public class FilterPanelViewModel : BaseViewModel
         modelER.Init("Энергоресурсы:", RetERTreeFamilies(), TreeInitType.All);
         FilterER = new FilterSection(modelER);
     }
+
+    protected RelayCommand _Refresh_Command;
+    public RelayCommand Refresh_Command
+    {
+        get
+        {
+            return _Refresh_Command ??
+                (_Refresh_Command = new RelayCommand(obj =>
+                {
+                    FiltersIsChanged = false;
+                }));
+        }
+    }
+
+
+    #region Create ObservableCollection<TreeFamily> FilterTree Datas
+
     private ObservableCollection<TreeFamily> RetCCTreeFamilies()
     {
         CostCenter cc = new CostCenter();
@@ -196,22 +210,32 @@ public class FilterPanelViewModel : BaseViewModel
         return result;
     }
 
+    #endregion
 
+    #region FilterOnChangeHandlers
+
+    private List<TreePerson> filterDateList;
     private void FilterDateOnChangeHandler()
     {
         FiltersIsChanged = true;
         filterDateList = modelDate.FilterList;
     }
+
+    private List<TreePerson> filterCCList;
     private void FilterCCOnChangeHandler()
     {
         FiltersIsChanged = true;
         filterCCList = modelCC.FilterList;
     }
+
+    private List<TreePerson> filterERList;
     private void FilterEROnChangeHandler()
     {
         FiltersIsChanged = true;
         filterERList = modelER.FilterList;
     }
+
+    #endregion
 
 
 }
