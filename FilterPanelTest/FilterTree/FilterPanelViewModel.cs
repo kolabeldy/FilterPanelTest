@@ -8,9 +8,9 @@ public class FilterPanelViewModel : BaseViewModel
         get => _FiltersIsChanged;
         set
         {
-            if(value) 
-                RefreshVisible = Visibility.Visible; 
-            else 
+            if (value)
+                RefreshVisible = Visibility.Visible;
+            else
                 RefreshVisible = Visibility.Hidden;
             Set(ref _FiltersIsChanged, value);
         }
@@ -35,6 +35,8 @@ public class FilterPanelViewModel : BaseViewModel
             Set(ref _FilterSet, value);
         }
     }
+
+    #region Для доработки
 
     //private List<FilterTable> GetFilters(FilterSet filter)
     //{
@@ -61,30 +63,29 @@ public class FilterPanelViewModel : BaseViewModel
     //    filterTable.Delete("Analysis", "Use");
     //    filterTable.AddRange(GetFilters(filterSet));
     //}
+
+    #endregion
+
     public FilterSection FilterDate { get; set; }
     public FilterSection FilterCC { get; set; }
     public FilterSection FilterER { get; set; }
 
-    private FilterSectionViewModel modelDate;
-    private FilterSectionViewModel modelCC;
-    private FilterSectionViewModel modelER;
-
-    public FilterPanelViewModel()
+    private List<FilterSection> _FilterSections = new();
+    private List<FilterSectionViewModel> _FilterSectionViewModels = new();
+    public FilterPanelViewModel(List<TreeFilterCollection> treeFilterCollections)
     {
-        modelDate = new FilterSectionViewModel();
-        modelDate.onChange += FilterDateOnChangeHandler;
-        modelDate.Init("Период:", RetPeriodTreeFamilies(), TreeInitType.Last);
-        FilterDate = new FilterSection(modelDate);
-
-        modelCC = new FilterSectionViewModel();
-        modelCC.onChange += FilterCCOnChangeHandler;
-        modelCC.Init("Центры затрат:", RetCCTreeFamilies(), TreeInitType.All);
-        FilterCC = new FilterSection(modelCC);
-
-        modelER = new FilterSectionViewModel();
-        modelER.onChange += FilterEROnChangeHandler;
-        modelER.Init("Энергоресурсы:", RetERTreeFamilies(), TreeInitType.All);
-        FilterER = new FilterSection(modelER);
+        int i = 0;
+        foreach(var r in treeFilterCollections)
+        {
+            _FilterSectionViewModels.Add(new FilterSectionViewModel());
+            _FilterSectionViewModels[i].onChange += FilterOnChangeHandler;
+            _FilterSectionViewModels[i].Init(treeFilterCollections[i].Title, treeFilterCollections[i].FilterCollection, treeFilterCollections[i].InitType);
+            _FilterSections.Add(new FilterSection(_FilterSectionViewModels[i]));
+            i++;
+        }
+        FilterDate = _FilterSections[0];
+        FilterCC = _FilterSections[1];
+        FilterER = _FilterSections[2];
     }
 
     protected RelayCommand _Refresh_Command;
@@ -100,142 +101,9 @@ public class FilterPanelViewModel : BaseViewModel
         }
     }
 
-
-    #region Create ObservableCollection<TreeFamily> FilterTree Datas
-
-    private ObservableCollection<TreeFamily> RetCCTreeFamilies()
-    {
-        CostCenter cc = new CostCenter();
-        ObservableCollection<TreeFamily> result = new ObservableCollection<TreeFamily>();
-        result.Add(new TreeFamily()
-        {
-            Name = "Основные",
-            Members = PList(cc.Get(SelectedActual: SelectChoise.All, SelectedMain: SelectChoise.True, SelectedTechnology: SelectChoise.True))
-        });
-        result.Add(new TreeFamily()
-        {
-            Name = "Прочие технологические",
-            Members = PList(cc.Get(SelectedActual: SelectChoise.All, SelectedMain: SelectChoise.False, SelectedTechnology: SelectChoise.True))
-        });
-        result.Add(new TreeFamily()
-        {
-            Name = "Вспомогательные",
-            Members = PList(cc.Get(SelectedActual: SelectChoise.All, SelectedMain: SelectChoise.False, SelectedTechnology: SelectChoise.False))
-        });
-        return result;
-    }
-    private ObservableCollection<TreeFamily> RetERTreeFamilies()
-    {
-        EnergyResource er = new EnergyResource();
-
-        ObservableCollection<TreeFamily> rez = new ObservableCollection<TreeFamily>();
-        rez.Add(new TreeFamily()
-        {
-            Name = "Первичные энергоресурсы",
-            Members = PList(er.Get(SelectedActual: SelectChoise.All, SelectedPrime: SelectChoise.True))
-        });
-        rez.Add(new TreeFamily()
-        {
-            Name = "Вторичные энергоресурсы",
-            Members = PList(er.Get(SelectedActual: SelectChoise.All, SelectedPrime: SelectChoise.False))
-        });
-        return rez;
-    }
-    private ObservableCollection<TreeFamily> RetPeriodTreeFamilies()
-    {
-        int periodFirst = Period.MinPeriod;
-        int startYear = Period.MinYear;
-        int lastPeriod = Period.MaxPeriod;
-        int lastYear = Period.MaxYear;
-        int lastMonth = Period.MaxMonth;
-        int[] arrYear = new int[lastYear - startYear + 1];
-        for (int i = 0; i < (lastYear - startYear + 1); i++)
-        {
-            arrYear[i] = startYear + i;
-        }
-        ObservableCollection<TreeFamily> resultFamilies = new ObservableCollection<TreeFamily>();
-        for (int y = startYear; y < lastYear; y++)
-        {
-            resultFamilies.Add(new TreeFamily()
-            {
-                Name = y.ToString(),
-                Members = PList1(y)
-            });
-        }
-        resultFamilies.Add(new TreeFamily()
-        {
-            Name = lastYear.ToString(),
-            Members = PList2(lastYear)
-        });
-        return resultFamilies;
-
-        List<TreePerson> PList1(int year)
-        {
-            List<TreePerson> resultPersons = new List<TreePerson>();
-            for (int m = 1; m <= 12; m++)
-            {
-                resultPersons.Add(new TreePerson()
-                {
-                    Id = year * 100 + m,
-                    Name = year.ToString() + " " + Period.monthArray[m - 1]
-                });
-            }
-            return resultPersons;
-        }
-        List<TreePerson> PList2(int year)
-        {
-            List<TreePerson> rez2 = new List<TreePerson>();
-            for (int m = 1; m <= lastMonth; m++)
-            {
-                rez2.Add(new TreePerson()
-                {
-                    Id = year * 100 + m,
-                    Name = year.ToString() + " " + Period.monthArray[m - 1]
-                });
-            }
-            return rez2;
-        }
-    }
-    private List<TreePerson> PList<T>(List<T> tList)
-    {
-        List<IdName> ids = new List<IdName>((IEnumerable<IdName>)tList);
-        List<TreePerson> result = new List<TreePerson>();
-        foreach (IdName r in ids)
-        {
-            TreePerson n = new TreePerson();
-            n.Id = r.Id;
-            n.Name = r.Name;
-            result.Add(n);
-        }
-        return result;
-    }
-
-    #endregion
-
-    #region FilterOnChangeHandlers
-
-    private List<TreePerson> filterDateList;
-    private void FilterDateOnChangeHandler()
+    private void FilterOnChangeHandler()
     {
         FiltersIsChanged = true;
-        filterDateList = modelDate.FilterList;
     }
-
-    private List<TreePerson> filterCCList;
-    private void FilterCCOnChangeHandler()
-    {
-        FiltersIsChanged = true;
-        filterCCList = modelCC.FilterList;
-    }
-
-    private List<TreePerson> filterERList;
-    private void FilterEROnChangeHandler()
-    {
-        FiltersIsChanged = true;
-        filterERList = modelER.FilterList;
-    }
-
-    #endregion
-
 
 }

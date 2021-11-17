@@ -2,9 +2,9 @@
 public partial class FilterPanel : UserControl
 {
     private FilterPanelViewModel viewmodel;
-    public FilterPanel()
+    public FilterPanel(List<TreeFilterCollection> treeFilterCollections)
     {
-        viewmodel = new FilterPanelViewModel();
+        viewmodel = new FilterPanelViewModel(treeFilterCollections);
         DataContext = viewmodel;
         InitializeComponent();
     }
