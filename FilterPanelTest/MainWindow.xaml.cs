@@ -1,11 +1,11 @@
 ﻿namespace FilterPanelTest;
 public partial class MainWindow : Window
 {
-    private MainWindowModel model;
+    private MainWindowModel viewmodel;
     public MainWindow()
     {
-        model = new(periodVisible: true, ccVisible: true, erVisible: true, ntVisible: true);
-        DataContext = model;
+        viewmodel = new();
+        DataContext = viewmodel;
         InitializeComponent();
     }
 

@@ -27,33 +27,15 @@
                  VerticalAlignment="Top"
                  HorizontalAlignment="Stretch">
         <StackPanel Orientation="Horizontal">
-            <!--<TextBlock Text="Filter"
+            <TextBlock Text="{Binding Caption}"
                        Foreground="White"
-                       Margin="10" />
-            <md:PopupBox Name="FilterPopup"
-                         StaysOpen="True"
-                         Foreground="White"
-                         PlacementMode="BottomAndAlignLeftEdges"
-                         PopupVerticalOffset="15"
-                         PopupHorizontalOffset="-10"
-                         HorizontalAlignment="Left"
-                         IsPopupOpen="{Binding IsFilterPopupOpen}">
-                <UserControl x:Name="FilterPanel" 
-                             Content="{Binding FilterPanel}"/>
-            </md:PopupBox>-->
-            <UserControl x:Name="FilterDatePanel" 
-                         Content="{Binding FilterDate}"  
-                         Margin="100,0,0,0" 
+                       VerticalAlignment="Center"
+                       Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                       Margin="15,0" />
+            <UserControl x:Name="filterPanel" 
+                         Content="{Binding FilterPanel}"  
                          VerticalAlignment="Center" />
-            <UserControl x:Name="FilterCCPanel" 
-                         Content="{Binding FilterCC}"  
-                         Margin="20,0,0,0" 
-                         VerticalAlignment="Center" />
-                <UserControl x:Name="FilterERPanel" 
-                         Content="{Binding FilterER}"  
-                         Margin="20,0,0,0" 
-                         VerticalAlignment="Center" />
-            </StackPanel>
+        </StackPanel>
         </md:Card>
         <StackPanel Grid.Row="1"
                     Margin="0,50">
