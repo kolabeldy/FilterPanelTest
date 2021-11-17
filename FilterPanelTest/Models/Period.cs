@@ -1,25 +1,25 @@
 ﻿namespace FilterPanelTest.Models;
 
 public enum MonthOutputStyle { AsNumeric, AsString };
-public class Period : IdName, INotifyPropertyChanged, IDBModel
+public class Period : IdName, IDBModel
 {
-    private int _Id;
-    public int Id
-    {
-        get => _Id;
-        set
-        {
-            Name = GetPeriodName(value);
-            NameFull = GetPeriodName(value, MonthOutputStyle.AsString);
-            Year = GetYear(value);
-            Month = GetMonth(value);
-            MonthName = GetMonthName(Month);
-            Set(ref _Id, value);
-        }
-    }
+    //private int _Id;
+    //public int Id
+    //{
+    //    get => _Id;
+    //    set
+    //    {
+    //        Name = GetPeriodName(value);
+    //        NameFull = GetPeriodName(value, MonthOutputStyle.AsString);
+    //        Year = GetYear(value);
+    //        Month = GetMonth(value);
+    //        MonthName = GetMonthName(Month);
+    //        Set(ref _Id, value);
+    //    }
+    //}
 
-    private string _Name;
-    public string Name { get => _Name; set => Set(ref _Name, value); }
+    //private string _Name;
+    //public string Name { get => _Name; set => Set(ref _Name, value); }
 
     private string _NameFull;
     public string NameFull { get => _NameFull; set => Set(ref _NameFull, value); }
@@ -212,22 +212,4 @@ public class Period : IdName, INotifyPropertyChanged, IDBModel
 
     #endregion
 
-    #region INotifyProperty
-
-    public event PropertyChangedEventHandler PropertyChanged;
-    public void OnPropertyChanged([CallerMemberName] string prop = "")
-    {
-        if (PropertyChanged != null)
-            PropertyChanged(this, new PropertyChangedEventArgs(prop));
-    }
-    protected bool Set<T>(ref T field, T value, [CallerMemberName] string PropertyName = null)
-    {
-        if (EqualityComparer<T>.Default.Equals(field, value)) return false;
-        field = value;
-        OnPropertyChanged(PropertyName);
-        return true;
-    }
-
-
-    #endregion
 }
