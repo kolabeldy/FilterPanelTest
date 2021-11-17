@@ -22,7 +22,7 @@
               Background="Transparent"
               BorderThickness="0.4"
               BorderBrush="DarkGray"
-              Margin="0,4,0,9" 
+              Margin="0" 
               Height="50">
         <GroupBox.Header>
             <TextBlock Text="{Binding Tittle}"

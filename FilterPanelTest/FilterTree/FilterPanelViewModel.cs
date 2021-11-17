@@ -66,11 +66,7 @@ public class FilterPanelViewModel : BaseViewModel
 
     #endregion
 
-    public FilterSection FilterDate { get; set; }
-    public FilterSection FilterCC { get; set; }
-    public FilterSection FilterER { get; set; }
-
-    private List<FilterSection> _FilterSections = new();
+    public List<FilterSection> FilterSections { get; set; } = new();
     private List<FilterSectionViewModel> _FilterSectionViewModels = new();
     public FilterPanelViewModel(List<TreeFilterCollection> treeFilterCollections)
     {
@@ -80,12 +76,9 @@ public class FilterPanelViewModel : BaseViewModel
             _FilterSectionViewModels.Add(new FilterSectionViewModel());
             _FilterSectionViewModels[i].onChange += FilterOnChangeHandler;
             _FilterSectionViewModels[i].Init(treeFilterCollections[i].Title, treeFilterCollections[i].FilterCollection, treeFilterCollections[i].InitType);
-            _FilterSections.Add(new FilterSection(_FilterSectionViewModels[i]));
+            FilterSections.Add(new FilterSection(_FilterSectionViewModels[i]));
             i++;
         }
-        FilterDate = _FilterSections[0];
-        FilterCC = _FilterSections[1];
-        FilterER = _FilterSections[2];
     }
 
     protected RelayCommand _Refresh_Command;

@@ -26,18 +26,13 @@
                 Height="25"
                 Width="25" />
         </Button>
-        <UserControl x:Name="FilterDatePanel" 
-                     Content="{Binding FilterDate}"  
-                     Margin="10,0,0,0" 
-                     VerticalAlignment="Center" />
-        <UserControl x:Name="FilterCCPanel" 
-                     Content="{Binding FilterCC}"  
-                     Margin="20,0,0,0" 
-                     VerticalAlignment="Center" />
-        <UserControl x:Name="FilterERPanel" 
-                     Content="{Binding FilterER}"  
-                     Margin="20,0,0,0" 
-                     VerticalAlignment="Center" />
+        <ListBox ItemsSource="{Binding FilterSections}">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+        </ListBox>
     </StackPanel>
     
 </UserControl>

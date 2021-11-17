@@ -51,6 +51,7 @@
                        Text="{Binding TitleSelectedCCGroup}" />
             <TextBlock Margin="50,10"
                        Text="{Binding TitleSelectedERGroup}" />
+                
         </StackPanel>
     </Grid>
 </Window>
