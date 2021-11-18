@@ -84,17 +84,17 @@ public class BusinessPageViewModel : BaseViewModel
             new TreeNode()
             {
                 Name = "Основные",
-                TreeNodeItems = GetTreeItemList(cc.Get(SelectedActual: SelectChoise.All, SelectedMain: SelectChoise.True, SelectedTechnology: SelectChoise.True))
+                TreeNodeItems = GetTreeItemList(CostCenter.TechMainList)
             },
             new TreeNode()
             {
                 Name = "Прочие технологические",
-                TreeNodeItems = GetTreeItemList(cc.Get(SelectedActual: SelectChoise.All, SelectedMain: SelectChoise.False, SelectedTechnology: SelectChoise.True))
+                TreeNodeItems = GetTreeItemList(CostCenter.TechOtherList)
             },
             new TreeNode()
             {
                 Name = "Вспомогательные",
-                TreeNodeItems = GetTreeItemList(cc.Get(SelectedActual: SelectChoise.All, SelectedMain: SelectChoise.False, SelectedTechnology: SelectChoise.False))
+                TreeNodeItems = GetTreeItemList(CostCenter.SlaveList)
             }
         };
         return result;
@@ -108,12 +108,12 @@ public class BusinessPageViewModel : BaseViewModel
             new TreeNode()
             {
                 Name = "Первичные энергоресурсы",
-                TreeNodeItems = GetTreeItemList(er.Get(SelectedActual: SelectChoise.All, SelectedPrime: SelectChoise.True))
+                TreeNodeItems = GetTreeItemList(EnergyResource.PrimeList)
             },
             new TreeNode()
             {
                 Name = "Вторичные энергоресурсы",
-                TreeNodeItems = GetTreeItemList(er.Get(SelectedActual: SelectChoise.All, SelectedPrime: SelectChoise.False))
+                TreeNodeItems = GetTreeItemList(EnergyResource.SecondaryList)
             }
         };
         return result;

@@ -7,7 +7,7 @@ public partial class App : Application
                     new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
 
         Sqlite.PathDB = Global.dbpath;
-        new Period().Init(DataUse.GetMinMaxPeriods());
+        //new Period().Init(DataUse.GetMinMaxPeriods());
         new CostCenter().Init();
         new EnergyResource().Init();
         MainWindow window = new MainWindow();

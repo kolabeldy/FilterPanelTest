@@ -26,7 +26,7 @@
                     Foreground="WhiteSmoke"
                     Style="{StaticResource MaterialDesignFlatButton}"
                     HorizontalContentAlignment="Left"
-                    Content="Выбор окна бзнес логики"
+                    Content="Выбор окна бизнес логики"
                     VerticalAlignment="Top"
                     Height="40"
                     Margin="5,10,5,5"

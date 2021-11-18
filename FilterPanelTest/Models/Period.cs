@@ -3,63 +3,9 @@
 public enum MonthOutputStyle { AsNumeric, AsString };
 public class Period : IdName, IDBModel
 {
-    //private int _Id;
-    //public int Id
-    //{
-    //    get => _Id;
-    //    set
-    //    {
-    //        Name = GetPeriodName(value);
-    //        NameFull = GetPeriodName(value, MonthOutputStyle.AsString);
-    //        Year = GetYear(value);
-    //        Month = GetMonth(value);
-    //        MonthName = GetMonthName(Month);
-    //        Set(ref _Id, value);
-    //    }
-    //}
-
-    //private string _Name;
-    //public string Name { get => _Name; set => Set(ref _Name, value); }
-
-    private string _NameFull;
-    public string NameFull { get => _NameFull; set => Set(ref _NameFull, value); }
-
-    private int _Year;
-    public int Year { get => _Year; set => Set(ref _Year, value); }
-
-    private int _Month;
-    public int Month { get => _Month; set => Set(ref _Month, value); }
-
-    private string _MonthName;
-    public string MonthName { get => _MonthName; set => Set(ref _MonthName, value); }
-
-    //private DateTime _SelectedStartDate;
-    //public DateTime SelectedStartDate
-    //{
-    //    get => _SelectedStartDate;
-    //    set
-    //    {
-    //        SelectedStartPeriod = DateTimeToInt(value);
-    //        Set(ref _SelectedStartDate, value);
-    //    }
-    //}
-
-    //private DateTime _SelectedEndDate;
-    //public DateTime SelectedEndDate
-    //{
-    //    get => _SelectedEndDate;
-    //    set
-    //    {
-    //        SelectedEndPeriod = DateTimeToInt(value);
-    //        Set(ref _SelectedEndDate, value);
-    //    }
-    //}
-
-    private int _SelectedStartPeriod;
-    public int SelectedStartPeriod { get => _SelectedStartPeriod; set => Set(ref _SelectedStartPeriod, value); }
-
-    private int _SelectedEndPeriod;
-    public int SelectedEndPeriod { get => _SelectedEndPeriod; set => Set(ref _SelectedEndPeriod, value); }
+    public int Year { get ; set; }
+    public int Month { get; set; }
+    public string MonthName { get; set; }
 
     public static int MinPeriod { get; set; }
     public static int MaxPeriod { get; set; }
@@ -67,43 +13,10 @@ public class Period : IdName, IDBModel
     public static int MaxYear { get; set; }
     public static int MinMonth { get; set; }
     public static int MaxMonth { get; set; }
-    public int MinSelectedPeriod { get; set; }
-    public int MaxSelectedPeriod { get; set; }
-    public int MinDynamicSelectedPeriod { get; set; }
-    public int MaxDynamicSelectedPeriod { get; set; }
     public static List<Period> Periods { get; set; }
 
     public Period()
     {
-        SelectedStartPeriod = MaxPeriod;
-        SelectedEndPeriod = MaxPeriod;
-    }
-    public static int GetYear(int period) => period / 100;
-    public static int GetMonth(int period) => period - GetYear(period) * 100;
-    public static string GetMonthName(int month) => monthArray[month - 1];
-
-    public void SetDynamicPeriods()
-    {
-        int monthCount = DifferenceBetweenDatesInMonth(SelectedStartPeriod, SelectedEndPeriod);
-        if (monthCount > 2)
-        {
-            MinDynamicSelectedPeriod = SelectedStartPeriod;
-            MaxDynamicSelectedPeriod = SelectedEndPeriod;
-        }
-        else
-        {
-            int monthCountFromMax = DifferenceBetweenDatesInMonth(SelectedEndPeriod, MaxPeriod);
-            if (monthCountFromMax > Global.DynamicPeriodMonthCount / 2 - 1)
-            {
-                MaxDynamicSelectedPeriod = PeriodMonthAdd(SelectedEndPeriod, Global.DynamicPeriodMonthCount / 2 - 1);
-                MinDynamicSelectedPeriod = PeriodMonthAdd(MaxDynamicSelectedPeriod, -Global.DynamicPeriodMonthCount + 1);
-            }
-            else
-            {
-                MaxDynamicSelectedPeriod = MaxPeriod;
-                MinDynamicSelectedPeriod = PeriodMonthAdd(MaxDynamicSelectedPeriod, -Global.DynamicPeriodMonthCount + 1);
-            }
-        }
     }
 
     private List<Period> GetPeriods()
@@ -111,52 +24,10 @@ public class Period : IdName, IDBModel
         return Get<Period>();
     }
 
-    public void Init((int minPeriod, int maxPeriod) periods)
+    public void Init()
     {
-        MinPeriod = periods.minPeriod;
-        MaxPeriod = periods.maxPeriod;
-        MinYear = GetYear(MinPeriod);
-        MaxYear = GetYear(MaxPeriod); ;
-        MinMonth = GetMonth(MinPeriod);
-        MaxMonth = GetMonth(MaxPeriod);
-        Periods = GetPeriods();
-    }
-
-    private static int DateTimeToInt(DateTime date)
-    {
-        return date.Year * 100 + date.Month;
-    }
-    private static string GetPeriodName(int period, MonthOutputStyle monthStyle = MonthOutputStyle.AsNumeric)
-    {
-        int year = GetYear(period);
-        int month = period - year * 100;
-        if (monthStyle == MonthOutputStyle.AsNumeric)
-            return year + "_" + month;
-        else return year + " " + monthArray[month - 1];
-    }
-
-    private static int PeriodMonthAdd(DateTime period, int month)
-    {
-        return DateTimeToInt(period.AddMonths(month));
 
     }
-    private static int PeriodMonthAdd(int period, int month)
-    {
-        if(period == 0 || month == 0) return 0;
-        DateTime date = new DateTime(GetYear(period), GetMonth(period), 1);
-        return DateTimeToInt(date.AddMonths(month));
-
-    }
-
-    private static int DifferenceBetweenDatesInMonth(DateTime datestart, DateTime dateend)
-    {
-        return ((dateend.Year - datestart.Year) * 12) + dateend.Month - datestart.Month;
-    }
-    private static int DifferenceBetweenDatesInMonth(int datestart, int dateend)
-    {
-        return ((GetYear(dateend) - GetYear(datestart)) * 12) + GetMonth(dateend) - GetMonth(datestart);
-    }
-
 
     public static string[] monthArray = new string[]
     { "янв", "фев", "мар", "апр", "май", "июн", "июл", "авг", "сен", "окт", "ноя", "дек" };
@@ -168,15 +39,15 @@ public class Period : IdName, IDBModel
         List<T> result = new();
         List<Period> list = new();
 
-        string sql = "SELECT Period FROM ERUsesMonth GROUP BY Period ORDER BY Period DESC";
+        string sql = "SELECT Id, Name, YearId, MonthId FROM Periods";
 
         DataTable dt = new DataTable();
         dt = Sqlite.Select(Global.dbpath, sql);
         list = (from DataRow dr in dt.Rows
                 select new Period()
                 {
-                    Id = Convert.ToInt32(dr["Period"]),
-                    Name = GetPeriodName(Convert.ToInt32(dr["Period"]), MonthOutputStyle.AsString)
+                    Id = Convert.ToInt32(dr["Id"]),
+                    Name = dr["Name"].ToString(),
                 }).ToList();
         result.AddRange((IEnumerable<T>)list);
         return result;
