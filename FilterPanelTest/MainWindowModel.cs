@@ -23,7 +23,7 @@ public class MainWindowModel : BaseViewModel
 
     #region Create List<TreeFamily> FilterTree Datas
 
-    private List<TreeFamily> RetPeriodTreeFamilies()
+    private List<TreeNode> RetPeriodTreeFamilies()
     {
         int periodFirst = Period.MinPeriod;
         int startYear = Period.MinYear;
@@ -35,28 +35,28 @@ public class MainWindowModel : BaseViewModel
         {
             arrYear[i] = startYear + i;
         }
-        List<TreeFamily> resultFamilies = new List<TreeFamily>();
+        List<TreeNode> resultFamilies = new List<TreeNode>();
         for (int y = startYear; y < lastYear; y++)
         {
-            resultFamilies.Add(new TreeFamily()
+            resultFamilies.Add(new TreeNode()
             {
                 Name = y.ToString(),
                 Members = PList1(y)
             });
         }
-        resultFamilies.Add(new TreeFamily()
+        resultFamilies.Add(new TreeNode()
         {
             Name = lastYear.ToString(),
             Members = PList2(lastYear)
         });
         return resultFamilies;
 
-        List<TreePerson> PList1(int year)
+        List<TreeElement> PList1(int year)
         {
-            List<TreePerson> resultPersons = new List<TreePerson>();
+            List<TreeElement> resultPersons = new List<TreeElement>();
             for (int m = 1; m <= 12; m++)
             {
-                resultPersons.Add(new TreePerson()
+                resultPersons.Add(new TreeElement()
                 {
                     Id = year * 100 + m,
                     Name = year.ToString() + " " + Period.monthArray[m - 1]
@@ -64,12 +64,12 @@ public class MainWindowModel : BaseViewModel
             }
             return resultPersons;
         }
-        List<TreePerson> PList2(int year)
+        List<TreeElement> PList2(int year)
         {
-            List<TreePerson> rez2 = new List<TreePerson>();
+            List<TreeElement> rez2 = new List<TreeElement>();
             for (int m = 1; m <= lastMonth; m++)
             {
-                rez2.Add(new TreePerson()
+                rez2.Add(new TreeElement()
                 {
                     Id = year * 100 + m,
                     Name = year.ToString() + " " + Period.monthArray[m - 1]
@@ -78,51 +78,51 @@ public class MainWindowModel : BaseViewModel
             return rez2;
         }
     }
-    private List<TreeFamily> RetCCTreeFamilies()
+    private List<TreeNode> RetCCTreeFamilies()
     {
         CostCenter cc = new CostCenter();
-        List<TreeFamily> result = new List<TreeFamily>();
-        result.Add(new TreeFamily()
+        List<TreeNode> result = new List<TreeNode>();
+        result.Add(new TreeNode()
         {
             Name = "Основные",
             Members = PList(cc.Get(SelectedActual: SelectChoise.All, SelectedMain: SelectChoise.True, SelectedTechnology: SelectChoise.True))
         });
-        result.Add(new TreeFamily()
+        result.Add(new TreeNode()
         {
             Name = "Прочие технологические",
             Members = PList(cc.Get(SelectedActual: SelectChoise.All, SelectedMain: SelectChoise.False, SelectedTechnology: SelectChoise.True))
         });
-        result.Add(new TreeFamily()
+        result.Add(new TreeNode()
         {
             Name = "Вспомогательные",
             Members = PList(cc.Get(SelectedActual: SelectChoise.All, SelectedMain: SelectChoise.False, SelectedTechnology: SelectChoise.False))
         });
         return result;
     }
-    private List<TreeFamily> RetERTreeFamilies()
+    private List<TreeNode> RetERTreeFamilies()
     {
         EnergyResource er = new EnergyResource();
 
-        List<TreeFamily> rez = new List<TreeFamily>();
-        rez.Add(new TreeFamily()
+        List<TreeNode> rez = new List<TreeNode>();
+        rez.Add(new TreeNode()
         {
             Name = "Первичные энергоресурсы",
             Members = PList(er.Get(SelectedActual: SelectChoise.All, SelectedPrime: SelectChoise.True))
         });
-        rez.Add(new TreeFamily()
+        rez.Add(new TreeNode()
         {
             Name = "Вторичные энергоресурсы",
             Members = PList(er.Get(SelectedActual: SelectChoise.All, SelectedPrime: SelectChoise.False))
         });
         return rez;
     }
-    private List<TreePerson> PList<T>(List<T> tList)
+    private List<TreeElement> PList<T>(List<T> tList)
     {
         List<IdName> ids = new List<IdName>((IEnumerable<IdName>)tList);
-        List<TreePerson> result = new List<TreePerson>();
+        List<TreeElement> result = new List<TreeElement>();
         foreach (IdName r in ids)
         {
-            TreePerson n = new TreePerson();
+            TreeElement n = new TreeElement();
             n.Id = r.Id;
             n.Name = r.Name;
             result.Add(n);
