@@ -11,7 +11,7 @@ public class FilterSectionViewModel : BaseViewModel
 
     public List<TreeNode> FilterTreeItems { get; set; }
     public string Tittle { get; set; } = "Title";
-    public List<TreeElement> FilterList { get; set; }
+    public List<TreeItem> FilterList { get; set; }
 
     #endregion
 
@@ -27,7 +27,7 @@ public class FilterSectionViewModel : BaseViewModel
         {
             if (isClosePress)
             {
-                List<TreeElement> tmpList = new List<TreeElement>();
+                List<TreeItem> tmpList = new List<TreeItem>();
                 tmpList = PersonListFill();
                 if (!ListCompare(FilterList, tmpList))
                 {
@@ -60,7 +60,7 @@ public class FilterSectionViewModel : BaseViewModel
     public FilterSectionViewModel()
     {
         FilterTreeItems = new List<TreeNode>();
-        FilterList = new List<TreeElement>();
+        FilterList = new List<TreeItem>();
     }
 
     #region Methods
@@ -108,13 +108,13 @@ public class FilterSectionViewModel : BaseViewModel
         return families;
     }
     //public abstract ObservableCollection<TreeFamily> RetTreeFamilies();
-    protected List<TreeElement> PList<T>(List<T> tList)
+    protected List<TreeItem> PList<T>(List<T> tList)
     {
         List<IdName> ids = new List<IdName>((IEnumerable<IdName>)tList);
-        List<TreeElement> result = new List<TreeElement>();
+        List<TreeItem> result = new List<TreeItem>();
         foreach (IdName r in ids)
         {
-            TreeElement n = new TreeElement();
+            TreeItem n = new TreeItem();
             n.Id = r.Id;
             n.Name = r.Name;
             result.Add(n);
@@ -122,14 +122,14 @@ public class FilterSectionViewModel : BaseViewModel
         return result;
     }
 
-    protected List<TreeElement> PersonListFill()
+    protected List<TreeItem> PersonListFill()
     {
-        List<TreeElement> result = new List<TreeElement>();
+        List<TreeItem> result = new List<TreeItem>();
         foreach (TreeNode family in FilterTreeItems)
-            foreach (TreeElement person in family.Members)
+            foreach (TreeItem person in family.Members)
                 if (ItemHelper.GetIsChecked(person) == true)
                 {
-                    result.Add(new TreeElement() { Id = person.Id, Name = person.Name });
+                    result.Add(new TreeItem() { Id = person.Id, Name = person.Name });
                 }
         return result;
     }
@@ -144,7 +144,7 @@ public class FilterSectionViewModel : BaseViewModel
         if (countList == 0) rez = "не выбрано";
         return rez;
     }
-    public static bool ListCompare(List<TreeElement> List1, List<TreeElement> List2)
+    public static bool ListCompare(List<TreeItem> List1, List<TreeItem> List2)
     {
         if (List1.Count == List2.Count)
         {

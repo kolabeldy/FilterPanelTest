@@ -110,7 +110,7 @@
                                 <CheckBox Content="{Binding Name}" 
                                           IsChecked="{Binding Path=(local:ItemHelper.IsChecked), Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             </HierarchicalDataTemplate>
-                            <DataTemplate DataType="{x:Type local:TreeElement}">
+                            <DataTemplate DataType="{x:Type local:TreeItem}">
                                 <CheckBox Content="{Binding Name}" 
                                           IsChecked="{Binding Path=(local:ItemHelper.IsChecked), Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             </DataTemplate>

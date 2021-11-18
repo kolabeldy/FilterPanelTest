@@ -51,12 +51,12 @@ public class MainWindowModel : BaseViewModel
         });
         return resultFamilies;
 
-        List<TreeElement> PList1(int year)
+        List<TreeItem> PList1(int year)
         {
-            List<TreeElement> resultPersons = new List<TreeElement>();
+            List<TreeItem> resultPersons = new List<TreeItem>();
             for (int m = 1; m <= 12; m++)
             {
-                resultPersons.Add(new TreeElement()
+                resultPersons.Add(new TreeItem()
                 {
                     Id = year * 100 + m,
                     Name = year.ToString() + " " + Period.monthArray[m - 1]
@@ -64,12 +64,12 @@ public class MainWindowModel : BaseViewModel
             }
             return resultPersons;
         }
-        List<TreeElement> PList2(int year)
+        List<TreeItem> PList2(int year)
         {
-            List<TreeElement> rez2 = new List<TreeElement>();
+            List<TreeItem> rez2 = new List<TreeItem>();
             for (int m = 1; m <= lastMonth; m++)
             {
-                rez2.Add(new TreeElement()
+                rez2.Add(new TreeItem()
                 {
                     Id = year * 100 + m,
                     Name = year.ToString() + " " + Period.monthArray[m - 1]
@@ -116,13 +116,13 @@ public class MainWindowModel : BaseViewModel
         });
         return rez;
     }
-    private List<TreeElement> PList<T>(List<T> tList)
+    private List<TreeItem> PList<T>(List<T> tList)
     {
         List<IdName> ids = new List<IdName>((IEnumerable<IdName>)tList);
-        List<TreeElement> result = new List<TreeElement>();
+        List<TreeItem> result = new List<TreeItem>();
         foreach (IdName r in ids)
         {
-            TreeElement n = new TreeElement();
+            TreeItem n = new TreeItem();
             n.Id = r.Id;
             n.Name = r.Name;
             result.Add(n);
