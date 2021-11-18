@@ -15,19 +15,17 @@ public class MainWindowModel : BaseViewModel
     public MainWindowModel()
     {
         List<TreeFilterCollection> _TreeFilterCollections = new();
-        _TreeFilterCollections.Add(new TreeFilterCollection { FilterCollection = RetPeriodTreeFamilies(), Title = "Период:", InitType = TreeInitType.Last });
-        _TreeFilterCollections.Add(new TreeFilterCollection { FilterCollection = RetCCTreeFamilies(), Title = "Центры затрат:", InitType = TreeInitType.All });
-        _TreeFilterCollections.Add(new TreeFilterCollection { FilterCollection = RetERTreeFamilies(), Title = "Энергоресурсы:", InitType = TreeInitType.All });
+        _TreeFilterCollections.Add(new TreeFilterCollection { FilterCollection = PeriodTree(), Title = "Период:", InitType = TreeInitType.Last });
+        _TreeFilterCollections.Add(new TreeFilterCollection { FilterCollection = CCTree(), Title = "Центры затрат:", InitType = TreeInitType.All });
+        _TreeFilterCollections.Add(new TreeFilterCollection { FilterCollection = ERTree(), Title = "Энергоресурсы:", InitType = TreeInitType.All });
         FilterPanel = new FilterPanel(_TreeFilterCollections);
     }
 
     #region Create List<TreeFamily> FilterTree Datas
 
-    private List<TreeNode> RetPeriodTreeFamilies()
+    private List<TreeNode> PeriodTree()
     {
-        int periodFirst = Period.MinPeriod;
         int startYear = Period.MinYear;
-        int lastPeriod = Period.MaxPeriod;
         int lastYear = Period.MaxYear;
         int lastMonth = Period.MaxMonth;
         int[] arrYear = new int[lastYear - startYear + 1];
@@ -35,88 +33,92 @@ public class MainWindowModel : BaseViewModel
         {
             arrYear[i] = startYear + i;
         }
-        List<TreeNode> resultFamilies = new List<TreeNode>();
+        List<TreeNode> result = new();
         for (int y = startYear; y < lastYear; y++)
         {
-            resultFamilies.Add(new TreeNode()
+            result.Add(new TreeNode()
             {
                 Name = y.ToString(),
-                Members = PList1(y)
+                TreeNodeItems = PList1(y)
             });
         }
-        resultFamilies.Add(new TreeNode()
+        result.Add(new TreeNode()
         {
             Name = lastYear.ToString(),
-            Members = PList2(lastYear)
+            TreeNodeItems = PList2(lastYear)
         });
-        return resultFamilies;
+        return result;
 
         List<TreeItem> PList1(int year)
         {
-            List<TreeItem> resultPersons = new List<TreeItem>();
+            List<TreeItem> result = new List<TreeItem>();
             for (int m = 1; m <= 12; m++)
             {
-                resultPersons.Add(new TreeItem()
+                result.Add(new TreeItem()
                 {
                     Id = year * 100 + m,
                     Name = year.ToString() + " " + Period.monthArray[m - 1]
                 });
             }
-            return resultPersons;
+            return result;
         }
         List<TreeItem> PList2(int year)
         {
-            List<TreeItem> rez2 = new List<TreeItem>();
+            List<TreeItem> result = new List<TreeItem>();
             for (int m = 1; m <= lastMonth; m++)
             {
-                rez2.Add(new TreeItem()
+                result.Add(new TreeItem()
                 {
                     Id = year * 100 + m,
                     Name = year.ToString() + " " + Period.monthArray[m - 1]
                 });
             }
-            return rez2;
+            return result;
         }
     }
-    private List<TreeNode> RetCCTreeFamilies()
+    private List<TreeNode> CCTree()
     {
         CostCenter cc = new CostCenter();
-        List<TreeNode> result = new List<TreeNode>();
-        result.Add(new TreeNode()
+        List<TreeNode> result = new()
         {
-            Name = "Основные",
-            Members = PList(cc.Get(SelectedActual: SelectChoise.All, SelectedMain: SelectChoise.True, SelectedTechnology: SelectChoise.True))
-        });
-        result.Add(new TreeNode()
-        {
-            Name = "Прочие технологические",
-            Members = PList(cc.Get(SelectedActual: SelectChoise.All, SelectedMain: SelectChoise.False, SelectedTechnology: SelectChoise.True))
-        });
-        result.Add(new TreeNode()
-        {
-            Name = "Вспомогательные",
-            Members = PList(cc.Get(SelectedActual: SelectChoise.All, SelectedMain: SelectChoise.False, SelectedTechnology: SelectChoise.False))
-        });
+            new TreeNode()
+            {
+                Name = "Основные",
+                TreeNodeItems = GetTreeItemList(cc.Get(SelectedActual: SelectChoise.All, SelectedMain: SelectChoise.True, SelectedTechnology: SelectChoise.True))
+            },
+            new TreeNode()
+            {
+                Name = "Прочие технологические",
+                TreeNodeItems = GetTreeItemList(cc.Get(SelectedActual: SelectChoise.All, SelectedMain: SelectChoise.False, SelectedTechnology: SelectChoise.True))
+            },
+            new TreeNode()
+            {
+                Name = "Вспомогательные",
+                TreeNodeItems = GetTreeItemList(cc.Get(SelectedActual: SelectChoise.All, SelectedMain: SelectChoise.False, SelectedTechnology: SelectChoise.False))
+            }
+        };
         return result;
     }
-    private List<TreeNode> RetERTreeFamilies()
+    private List<TreeNode> ERTree()
     {
         EnergyResource er = new EnergyResource();
 
-        List<TreeNode> rez = new List<TreeNode>();
-        rez.Add(new TreeNode()
+        List<TreeNode> result = new()
         {
-            Name = "Первичные энергоресурсы",
-            Members = PList(er.Get(SelectedActual: SelectChoise.All, SelectedPrime: SelectChoise.True))
-        });
-        rez.Add(new TreeNode()
-        {
-            Name = "Вторичные энергоресурсы",
-            Members = PList(er.Get(SelectedActual: SelectChoise.All, SelectedPrime: SelectChoise.False))
-        });
-        return rez;
+            new TreeNode()
+            {
+                Name = "Первичные энергоресурсы",
+                TreeNodeItems = GetTreeItemList(er.Get(SelectedActual: SelectChoise.All, SelectedPrime: SelectChoise.True))
+            },
+            new TreeNode()
+            {
+                Name = "Вторичные энергоресурсы",
+                TreeNodeItems = GetTreeItemList(er.Get(SelectedActual: SelectChoise.All, SelectedPrime: SelectChoise.False))
+            }
+        };
+        return result;
     }
-    private List<TreeItem> PList<T>(List<T> tList)
+    private List<TreeItem> GetTreeItemList<T>(List<T> tList)
     {
         List<IdName> ids = new List<IdName>((IEnumerable<IdName>)tList);
         List<TreeItem> result = new List<TreeItem>();

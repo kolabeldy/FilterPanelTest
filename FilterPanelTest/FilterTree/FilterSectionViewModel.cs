@@ -78,14 +78,14 @@ public class FilterSectionViewModel : BaseViewModel
     {
         filterListAllCount = 0;
         foreach (TreeNode family in families)
-            foreach (var person in family.Members)
+            foreach (var person in family.TreeNodeItems)
             {
                 person.SetValue(ItemHelper.ParentProperty, family);
                 filterListAllCount++;
             }
         int i = 1;
         foreach (TreeNode family in families)
-            foreach (var person in family.Members)
+            foreach (var person in family.TreeNodeItems)
             {
                 switch (treeInitType)
                 {
@@ -126,7 +126,7 @@ public class FilterSectionViewModel : BaseViewModel
     {
         List<TreeItem> result = new List<TreeItem>();
         foreach (TreeNode family in FilterTreeItems)
-            foreach (TreeItem person in family.Members)
+            foreach (TreeItem person in family.TreeNodeItems)
                 if (ItemHelper.GetIsChecked(person) == true)
                 {
                     result.Add(new TreeItem() { Id = person.Id, Name = person.Name });
@@ -169,7 +169,7 @@ public class FilterSectionViewModel : BaseViewModel
                 (_SelectAll_Command = new RelayCommand(obj =>
                 {
                     foreach (TreeNode family in FilterTreeItems)
-                        foreach (var person in family.Members)
+                        foreach (var person in family.TreeNodeItems)
                         {
                             ItemHelper.SetIsChecked(person, true);
                         }
@@ -186,7 +186,7 @@ public class FilterSectionViewModel : BaseViewModel
                 (_UnselectAll_Command = new RelayCommand(obj =>
                 {
                     foreach (TreeNode family in FilterTreeItems)
-                        foreach (var person in family.Members)
+                        foreach (var person in family.TreeNodeItems)
                         {
                             ItemHelper.SetIsChecked(person, false);
                         }

@@ -90,6 +90,7 @@ public class CostCenter : IdName, IDBModel
 
         return Sqlite.ExecNonQuery(Global.dbpath, sql);
     }
+
     #endregion
 
 }
