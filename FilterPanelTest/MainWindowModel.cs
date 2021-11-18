@@ -14,11 +14,11 @@ public class MainWindowModel : BaseViewModel
     public FilterPanel FilterPanel {get;set;}
     public MainWindowModel()
     {
-        List<TreeFilterCollection> _TreeFilterCollections = new();
-        _TreeFilterCollections.Add(new TreeFilterCollection { FilterCollection = PeriodTree(), Title = "Период:", InitType = TreeInitType.Last });
-        _TreeFilterCollections.Add(new TreeFilterCollection { FilterCollection = CCTree(), Title = "Центры затрат:", InitType = TreeInitType.All });
-        _TreeFilterCollections.Add(new TreeFilterCollection { FilterCollection = ERTree(), Title = "Энергоресурсы:", InitType = TreeInitType.All });
-        FilterPanel = new FilterPanel(_TreeFilterCollections);
+        List<TreeFilterCollection> treeFilterCollections = new();
+        treeFilterCollections.Add(new TreeFilterCollection { FilterCollection = PeriodTree(), Title = "Период:", InitType = TreeInitType.Last });
+        treeFilterCollections.Add(new TreeFilterCollection { FilterCollection = CCTree(), Title = "Центры затрат:", InitType = TreeInitType.All });
+        treeFilterCollections.Add(new TreeFilterCollection { FilterCollection = ERTree(), Title = "Энергоресурсы:", InitType = TreeInitType.All });
+        FilterPanel = new FilterPanel(treeFilterCollections);
     }
 
     #region Create List<TreeFamily> FilterTree Datas
@@ -51,29 +51,29 @@ public class MainWindowModel : BaseViewModel
 
         List<TreeItem> PList1(int year)
         {
-            List<TreeItem> result = new List<TreeItem>();
+            List<TreeItem> result1 = new List<TreeItem>();
             for (int m = 1; m <= 12; m++)
             {
-                result.Add(new TreeItem()
+                result1.Add(new TreeItem()
                 {
                     Id = year * 100 + m,
                     Name = year.ToString() + " " + Period.monthArray[m - 1]
                 });
             }
-            return result;
+            return result1;
         }
         List<TreeItem> PList2(int year)
         {
-            List<TreeItem> result = new List<TreeItem>();
+            List<TreeItem> result2 = new List<TreeItem>();
             for (int m = 1; m <= lastMonth; m++)
             {
-                result.Add(new TreeItem()
+                result2.Add(new TreeItem()
                 {
                     Id = year * 100 + m,
                     Name = year.ToString() + " " + Period.monthArray[m - 1]
                 });
             }
-            return result;
+            return result2;
         }
     }
     private List<TreeNode> CCTree()

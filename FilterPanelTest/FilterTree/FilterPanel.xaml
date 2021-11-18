@@ -26,7 +26,8 @@
                 Height="25"
                 Width="25" />
         </Button>
-        <ListBox ItemsSource="{Binding FilterSections}">
+        <ListBox ItemsSource="{Binding FilterSections}" 
+                 SelectionChanged="ListBox_SelectionChanged" >
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal"/>

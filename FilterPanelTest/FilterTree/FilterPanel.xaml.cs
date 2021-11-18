@@ -8,4 +8,11 @@ public partial class FilterPanel : UserControl
         DataContext = viewmodel;
         InitializeComponent();
     }
+
+    private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        FilterSection filterSection = (sender as ListBox).SelectedItem as FilterSection;
+        filterSection.PopupBox.IsPopupOpen = true;
+        //filterSection.model.IsFilterPopupOpen = true;
+    }
 }

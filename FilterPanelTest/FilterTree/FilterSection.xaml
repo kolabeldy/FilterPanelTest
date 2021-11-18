@@ -106,7 +106,7 @@
                               ItemsSource="{Binding FilterTreeItems}">
                         <TreeView.Resources>
                             <HierarchicalDataTemplate DataType="{x:Type local:TreeNode}" 
-                                                      ItemsSource="{Binding Members}">
+                                                      ItemsSource="{Binding TreeNodeItems}">
                                 <CheckBox Content="{Binding Name}" 
                                           IsChecked="{Binding Path=(local:ItemHelper.IsChecked), Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             </HierarchicalDataTemplate>
