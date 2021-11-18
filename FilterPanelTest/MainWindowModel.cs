@@ -21,9 +21,9 @@ public class MainWindowModel : BaseViewModel
         FilterPanel = new FilterPanel(_TreeFilterCollections);
     }
 
-    #region Create ObservableCollection<TreeFamily> FilterTree Datas
+    #region Create List<TreeFamily> FilterTree Datas
 
-    private ObservableCollection<TreeFamily> RetPeriodTreeFamilies()
+    private List<TreeFamily> RetPeriodTreeFamilies()
     {
         int periodFirst = Period.MinPeriod;
         int startYear = Period.MinYear;
@@ -35,7 +35,7 @@ public class MainWindowModel : BaseViewModel
         {
             arrYear[i] = startYear + i;
         }
-        ObservableCollection<TreeFamily> resultFamilies = new ObservableCollection<TreeFamily>();
+        List<TreeFamily> resultFamilies = new List<TreeFamily>();
         for (int y = startYear; y < lastYear; y++)
         {
             resultFamilies.Add(new TreeFamily()
@@ -78,10 +78,10 @@ public class MainWindowModel : BaseViewModel
             return rez2;
         }
     }
-    private ObservableCollection<TreeFamily> RetCCTreeFamilies()
+    private List<TreeFamily> RetCCTreeFamilies()
     {
         CostCenter cc = new CostCenter();
-        ObservableCollection<TreeFamily> result = new ObservableCollection<TreeFamily>();
+        List<TreeFamily> result = new List<TreeFamily>();
         result.Add(new TreeFamily()
         {
             Name = "Основные",
@@ -99,11 +99,11 @@ public class MainWindowModel : BaseViewModel
         });
         return result;
     }
-    private ObservableCollection<TreeFamily> RetERTreeFamilies()
+    private List<TreeFamily> RetERTreeFamilies()
     {
         EnergyResource er = new EnergyResource();
 
-        ObservableCollection<TreeFamily> rez = new ObservableCollection<TreeFamily>();
+        List<TreeFamily> rez = new List<TreeFamily>();
         rez.Add(new TreeFamily()
         {
             Name = "Первичные энергоресурсы",

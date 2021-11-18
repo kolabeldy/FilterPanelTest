@@ -9,7 +9,7 @@ public class FilterSectionViewModel : BaseViewModel
 
     #region Properties
 
-    public ObservableCollection<TreeFamily> FilterTreeItems { get; set; }
+    public List<TreeFamily> FilterTreeItems { get; set; }
     public string Tittle { get; set; } = "Title";
     public List<TreePerson> FilterList { get; set; }
 
@@ -59,12 +59,12 @@ public class FilterSectionViewModel : BaseViewModel
 
     public FilterSectionViewModel()
     {
-        FilterTreeItems = new ObservableCollection<TreeFamily>();
+        FilterTreeItems = new List<TreeFamily>();
         FilterList = new List<TreePerson>();
     }
 
     #region Methods
-    public void Init(string tittle, ObservableCollection<TreeFamily> filterTree, TreeInitType treeInitType = TreeInitType.All)
+    public void Init(string tittle, List<TreeFamily> filterTree, TreeInitType treeInitType = TreeInitType.All)
     {
         Tittle = tittle;
         FilterTreeItems = FamiliesInit(filterTree, treeInitType);
@@ -74,7 +74,7 @@ public class FilterSectionViewModel : BaseViewModel
     }
 
     protected int filterListAllCount;
-    public ObservableCollection<TreeFamily> FamiliesInit(ObservableCollection<TreeFamily> families, TreeInitType treeInitType = TreeInitType.All)
+    public List<TreeFamily> FamiliesInit(List<TreeFamily> families, TreeInitType treeInitType = TreeInitType.All)
     {
         filterListAllCount = 0;
         foreach (TreeFamily family in families)
