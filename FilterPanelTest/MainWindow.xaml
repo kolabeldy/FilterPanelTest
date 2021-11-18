@@ -13,45 +13,36 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="1000" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Height="900" Width="1400" WindowStartupLocation="CenterScreen">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <md:Card Grid.Row="0"
-                 Margin="7,-10,7,0"
-                 Background="{StaticResource PrimaryHueMidBrush}"
-                 Padding="0,10,0,0"
-                 UniformCornerRadius="10"
-                 VerticalAlignment="Top"
-                 HorizontalAlignment="Stretch">
-        <StackPanel Orientation="Horizontal">
-            <TextBlock Text="{Binding Caption}"
-                       Foreground="White"
-                       VerticalAlignment="Center"
-                       Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
-                       Margin="15,0" />
-            <UserControl x:Name="filterPanel" 
-                         Content="{Binding FilterPanel}"  
-                         VerticalAlignment="Center" />
-        </StackPanel>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <md:Card Grid.Column="0"
+                 Background="{StaticResource PrimaryHueMidBrush}">
+            <StackPanel>
+                <Button Name="MenuButton"
+                    Foreground="WhiteSmoke"
+                    Style="{StaticResource MaterialDesignFlatButton}"
+                    HorizontalContentAlignment="Left"
+                    Content="Выбор окна бзнес логики"
+                    VerticalAlignment="Top"
+                    Height="40"
+                    Margin="5,10,5,5"
+                    Click="MenuButton_Click" Cursor="Hand" />
+                <Button Name="ClearButton"
+                    Foreground="WhiteSmoke"
+                    Style="{StaticResource MaterialDesignFlatButton}"
+                    HorizontalContentAlignment="Left"
+                    Content="Очистка рабочей области"
+                    VerticalAlignment="Top"
+                    Height="40"
+                    Margin="5,0"
+                    Click="ClearButton_Click" Cursor="Hand" />
+            </StackPanel>
         </md:Card>
-        <StackPanel Grid.Row="1"
-                    Margin="0,50">
-            <Label Margin="50,10"
-                   Content="{Binding TitleStartPeriod}" />
-            <Label Margin="50,10"
-                   Content="{Binding TitleEndPeriod}" />
-            <Label Margin="50,10"
-                   Content="{Binding TitleStartDynamicPeriod}" />
-            <Label Margin="50,10"
-                   Content="{Binding TitleEndDynamicPeriod}" />
-            <TextBlock Margin="50,10"
-                       Text="{Binding TitleSelectedCCGroup}" />
-            <TextBlock Margin="50,10"
-                       Text="{Binding TitleSelectedERGroup}" />
-                
-        </StackPanel>
+        <UserControl Name="BusinessPageFrame" 
+                     Grid.Column="1"/>
     </Grid>
 </Window>

@@ -1,5 +1,5 @@
 ﻿namespace FilterPanelTest;
-public class MainWindowModel : BaseViewModel
+public class BusinessPageViewModel : BaseViewModel
 {
     private string _Caption = "Тест панели фильтров";
     public string Caption
@@ -12,7 +12,7 @@ public class MainWindowModel : BaseViewModel
     }
 
     public FilterPanel FilterPanel {get;set;}
-    public MainWindowModel()
+    public BusinessPageViewModel()
     {
         List<TreeFilterCollection> treeFilterCollections = new();
         treeFilterCollections.Add(new TreeFilterCollection { FilterCollection = PeriodTree(), Title = "Период:", InitType = TreeInitType.Last });
