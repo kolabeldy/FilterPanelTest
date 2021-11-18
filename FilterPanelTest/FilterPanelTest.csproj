@@ -29,13 +29,4 @@
 	  </None>
 	</ItemGroup>
 	
-	<ItemGroup>
-		<PackageReference Include="sqlite" Version="3.13.0">
-			<ExcludeAssets>native</ExcludeAssets>
-		</PackageReference>
-		<None Update="sqlite3.dll">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-	</ItemGroup>
-
 </Project>
