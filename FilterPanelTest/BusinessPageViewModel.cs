@@ -25,56 +25,17 @@ public class BusinessPageViewModel : BaseViewModel
 
     private List<TreeNode> PeriodTree()
     {
-        int startYear = Period.MinYear;
-        int lastYear = Period.MaxYear;
-        int lastMonth = Period.MaxMonth;
-        int[] arrYear = new int[lastYear - startYear + 1];
-        for (int i = 0; i < (lastYear - startYear + 1); i++)
-        {
-            arrYear[i] = startYear + i;
-        }
         List<TreeNode> result = new();
-        for (int y = startYear; y < lastYear; y++)
+
+        foreach (int r in Period.Years)
         {
             result.Add(new TreeNode()
             {
-                Name = y.ToString(),
-                TreeNodeItems = PList1(y)
+                Name = r.ToString(),
+                TreeNodeItems = ConvertToTreeItemList(Period.YearPeriods(r))
             });
         }
-        result.Add(new TreeNode()
-        {
-            Name = lastYear.ToString(),
-            TreeNodeItems = PList2(lastYear)
-        });
         return result;
-
-        List<TreeItem> PList1(int year)
-        {
-            List<TreeItem> result1 = new List<TreeItem>();
-            for (int m = 1; m <= 12; m++)
-            {
-                result1.Add(new TreeItem()
-                {
-                    Id = year * 100 + m,
-                    Name = year.ToString() + " " + Period.monthArray[m - 1]
-                });
-            }
-            return result1;
-        }
-        List<TreeItem> PList2(int year)
-        {
-            List<TreeItem> result2 = new List<TreeItem>();
-            for (int m = 1; m <= lastMonth; m++)
-            {
-                result2.Add(new TreeItem()
-                {
-                    Id = year * 100 + m,
-                    Name = year.ToString() + " " + Period.monthArray[m - 1]
-                });
-            }
-            return result2;
-        }
     }
     private List<TreeNode> CCTree()
     {
@@ -84,17 +45,17 @@ public class BusinessPageViewModel : BaseViewModel
             new TreeNode()
             {
                 Name = "Основные",
-                TreeNodeItems = GetTreeItemList(CostCenter.TechMainList)
+                TreeNodeItems = ConvertToTreeItemList(CostCenter.TechMainList)
             },
             new TreeNode()
             {
                 Name = "Прочие технологические",
-                TreeNodeItems = GetTreeItemList(CostCenter.TechOtherList)
+                TreeNodeItems = ConvertToTreeItemList(CostCenter.TechOtherList)
             },
             new TreeNode()
             {
                 Name = "Вспомогательные",
-                TreeNodeItems = GetTreeItemList(CostCenter.SlaveList)
+                TreeNodeItems = ConvertToTreeItemList(CostCenter.SlaveList)
             }
         };
         return result;
@@ -107,18 +68,18 @@ public class BusinessPageViewModel : BaseViewModel
         {
             new TreeNode()
             {
-                Name = "Первичные энергоресурсы",
-                TreeNodeItems = GetTreeItemList(EnergyResource.PrimeList)
+                Name = "Первичные",
+                TreeNodeItems = ConvertToTreeItemList(EnergyResource.PrimeList)
             },
             new TreeNode()
             {
-                Name = "Вторичные энергоресурсы",
-                TreeNodeItems = GetTreeItemList(EnergyResource.SecondaryList)
+                Name = "Вторичные",
+                TreeNodeItems = ConvertToTreeItemList(EnergyResource.SecondaryList)
             }
         };
         return result;
     }
-    private List<TreeItem> GetTreeItemList<T>(List<T> tList)
+    private List<TreeItem> ConvertToTreeItemList<T>(List<T> tList)
     {
         List<IdName> ids = new List<IdName>((IEnumerable<IdName>)tList);
         List<TreeItem> result = new List<TreeItem>();

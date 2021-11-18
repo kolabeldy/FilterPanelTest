@@ -14,6 +14,7 @@ public class Period : IdName, IDBModel
     public static int MinMonth { get; set; }
     public static int MaxMonth { get; set; }
     public static List<Period> Periods { get; set; }
+    public static List<int> Years { get; set; }
 
     public Period()
     {
@@ -26,7 +27,35 @@ public class Period : IdName, IDBModel
 
     public void Init()
     {
+        Periods = Get<Period>();
+        Years = GetYears();
+    }
 
+    private static List<int> GetYears()
+    {
+        List<int> result = new();
+        var qry = (from o in Periods
+                   group o by new { o.Year } into gr
+                   select new IdName
+                   {
+                       Id = gr.Key.Year
+                   }).ToList();
+
+        foreach (var r in qry)
+        {
+            result.Add(r.Id);
+        }
+        return result;
+    }
+    public static List<IdName> YearPeriods(int year)
+    {
+        return (from o in Periods
+                where o.Year == year
+                select new IdName
+                {
+                    Id = o.Id,
+                    Name = o.Name
+                }).ToList();
     }
 
     public static string[] monthArray = new string[]
@@ -48,6 +77,8 @@ public class Period : IdName, IDBModel
                 {
                     Id = Convert.ToInt32(dr["Id"]),
                     Name = dr["Name"].ToString(),
+                    Year = Convert.ToInt32(dr["YearId"]),
+                    Month = Convert.ToInt32(dr["MonthId"])
                 }).ToList();
         result.AddRange((IEnumerable<T>)list);
         return result;

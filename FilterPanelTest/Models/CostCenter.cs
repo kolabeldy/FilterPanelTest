@@ -20,12 +20,9 @@ public class CostCenter : IdName, IDBModel
     #region Methods
     public void Init()
     {
-        CostCenter ccAll = new CostCenter { Id = 0, Name = "все" };
-        TechMainList.Add(ccAll);
+        CostCenter ccAll = new ();
         TechMainList.AddRange(Get(SelectChoise.True, SelectChoise.True, SelectChoise.True));
-        TechOtherList.Add(ccAll);
         TechOtherList.AddRange(Get(SelectChoise.True, SelectChoise.False, SelectChoise.True));
-        SlaveList.Add(ccAll);
         SlaveList.AddRange(Get(SelectChoise.True, SelectChoise.False, SelectChoise.False));
 
     }

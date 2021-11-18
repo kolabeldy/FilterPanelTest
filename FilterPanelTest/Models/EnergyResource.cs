@@ -21,10 +21,8 @@ public class EnergyResource : IdName, IDBModel
 
     public void Init()
     {
-        EnergyResource erAll = new EnergyResource { Id = 0, NameFull = "все" };
-        PrimeList.Add(erAll);
+        EnergyResource erAll = new ();
         PrimeList.AddRange(Get(SelectChoise.True, SelectChoise.True));
-        SecondaryList.Add(erAll);
         SecondaryList.AddRange(Get(SelectChoise.True, SelectChoise.False));
     }
     public List<EnergyResource> Get(SelectChoise SelectedActual, SelectChoise SelectedPrime)
