@@ -1,4 +1,7 @@
-﻿namespace FilterPanelTest;
+﻿using MyServicesLibrary.Controls.CheckedTree;
+using MyServicesLibrary.Controls.FilterPanelCheckedTree;
+
+namespace FilterPanelTest;
 public class BusinessPageViewModel : BaseViewModel
 {
     public FilterPanel FilterPanel { get; set; }

@@ -19,7 +19,6 @@ global using MaterialDesignThemes.Wpf;
 global using FilterPanelTest.Models;
 //global using FilterPanelTest.Views;
 global using FilterPanelTest.Models.Base;
-global using FilterPanelTest.FilterTree;
 
 //global using FilterPanelTest.Filter;
 //global using FilterPanelTest.ViewModels;
@@ -32,7 +31,8 @@ global using MyServicesLibrary.ViewModelsBase;
 global using MyServicesLibrary.Helpers;
 global using MyServicesLibrary.Infrastructure.MessageBoxes;
 global using MyServicesLibrary.DataAccess;
-global using MyControlsLibrary.CheckedTree;
+global using MyServicesLibrary.Controls.CheckedTree;
+global using MyServicesLibrary.Controls.FilterPanelCheckedTree;
 
 namespace FilterPanelTest;
 public enum SelectChoise { All, True, False }
