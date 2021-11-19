@@ -28,16 +28,6 @@ public class FilterPanelViewModel : BaseViewModel
         }
     }
 
-    private FilterSet _FilterSet;
-    public FilterSet FilterSet
-    {
-        get => _FilterSet;
-        set
-        {
-            Set(ref _FilterSet, value);
-        }
-    }
-
     public List<FilterSection> FilterSections { get; set; } = new();
     private List<FilterSectionViewModel> _FilterSectionViewModels = new();
     public FilterPanelViewModel(List<TreeFilterCollection> treeFilterCollections)

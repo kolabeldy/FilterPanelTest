@@ -13,7 +13,6 @@ global using System.Windows.Controls.Primitives;
 global using System.Reflection;
 global using System.Data;
 global using System.Windows.Data;
-global using Calendar = System.Windows.Controls.Calendar;
 
 global using MaterialDesignThemes.Wpf;
 
@@ -21,7 +20,6 @@ global using FilterPanelTest.Models;
 //global using FilterPanelTest.Views;
 global using FilterPanelTest.Models.Base;
 global using FilterPanelTest.FilterTree;
-global using FilterPanelTest.Filter;
 
 //global using FilterPanelTest.Filter;
 //global using FilterPanelTest.ViewModels;
@@ -32,14 +30,12 @@ global using FilterPanelTest.Filter;
 
 global using MyServicesLibrary.ViewModelsBase;
 global using MyServicesLibrary.Helpers;
-//global using MyUserControlsLibrary.CaptionCard;
 global using MyServicesLibrary.Infrastructure.MessageBoxes;
 global using MyServicesLibrary.DataAccess;
 global using MyControlsLibrary.CheckedTree;
 
 namespace FilterPanelTest;
 public enum SelectChoise { All, True, False }
-public delegate void IsFilterChanged(FilterSet filterSet);
 public delegate void IsFilterPanelClosed();
 
 public static class Global
