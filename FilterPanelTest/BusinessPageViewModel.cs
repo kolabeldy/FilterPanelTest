@@ -123,6 +123,36 @@ public class BusinessPageViewModel : BaseViewModel
         List<IdName> erFilterList = GetItemFilters(erTree);
     }
 
+    #region Для доработки
+
+    //private List<FilterTable> GetFilters(FilterSet filter)
+    //{
+    //    List<FilterTable> result = new();
+    //    result.Add(new FilterTable { Category = "Analysis", Item = "Use", Indicator = "PeriodMin", Value = FilterSet.StartPeriod });
+    //    result.Add(new FilterTable { Category = "Analysis", Item = "Use", Indicator = "PeriodMax", Value = FilterSet.EndPeriod });
+    //    result.Add(new FilterTable { Category = "Analysis", Item = "Use", Indicator = "PeriodDynamicMin", Value = FilterSet.StartDynamicPeriod });
+    //    result.Add(new FilterTable { Category = "Analysis", Item = "Use", Indicator = "PeriodDynamicMax", Value = FilterSet.EndDynamicPeriod });
+    //    foreach (var r in FilterSet.SelectedCC)
+    //    {
+    //        result.Add(new FilterTable { Category = "Analysis", Item = "Use", Indicator = "CC", Value = r.Id });
+    //    }
+    //    foreach (var r in FilterSet.SelectedER)
+    //    {
+    //        result.Add(new FilterTable { Category = "Analysis", Item = "Use", Indicator = "ER", Value = r.Id });
+    //    }
+
+    //    return result;
+    //}
+    //protected void Refresh(FilterSet filterSet)
+    //{
+    //    this.FilterSet = filterSet;
+    //    FilterTable filterTable = new();
+    //    filterTable.Delete("Analysis", "Use");
+    //    filterTable.AddRange(GetFilters(filterSet));
+    //}
+
+    #endregion
+
 
 
 }
