@@ -11,7 +11,7 @@ public class BusinessPageViewModel : BaseViewModel
         }
     }
 
-    public FilterPanel FilterPanel {get;set;}
+    public FilterPanel FilterPanel { get; set; }
     public BusinessPageViewModel()
     {
         List<TreeFilterCollection> treeFilterCollections = new();
@@ -21,12 +21,14 @@ public class BusinessPageViewModel : BaseViewModel
         FilterPanel = new FilterPanel(treeFilterCollections);
     }
 
-    #region Create List<TreeFamily> FilterTree Datas
+    #region Подготовка коллекция для передачи в модуль Фильтр
 
     private List<TreeNode> PeriodTree()
     {
         List<TreeNode> result = new();
-
+        //var descYears = from u in Period.Years
+        //                orderby u descending
+        //                select u;
         foreach (int r in Period.Years)
         {
             result.Add(new TreeNode()

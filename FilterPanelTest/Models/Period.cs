@@ -3,7 +3,7 @@
 public enum MonthOutputStyle { AsNumeric, AsString };
 public class Period : IdName, IDBModel
 {
-    public int Year { get ; set; }
+    public int Year { get; set; }
     public int Month { get; set; }
     public string MonthName { get; set; }
 
@@ -33,19 +33,9 @@ public class Period : IdName, IDBModel
 
     private static List<int> GetYears()
     {
-        List<int> result = new();
-        var qry = (from o in Periods
-                   group o by new { o.Year } into gr
-                   select new IdName
-                   {
-                       Id = gr.Key.Year
-                   }).ToList();
-
-        foreach (var r in qry)
-        {
-            result.Add(r.Id);
-        }
-        return result;
+        return (from o in Periods
+                group o by new { o.Year } into gr
+                select gr.Key.Year).ToList();
     }
     public static List<IdName> YearPeriods(int year)
     {
