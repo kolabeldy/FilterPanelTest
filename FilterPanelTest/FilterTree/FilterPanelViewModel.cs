@@ -1,6 +1,8 @@
 ﻿namespace FilterPanelTest.FilterTree;
 public class FilterPanelViewModel : BaseViewModel
 {
+    public delegate void IsChangeMetodContainer();
+    public event IsChangeMetodContainer onChange;
 
     private bool _FiltersIsChanged = false;
     public bool FiltersIsChanged
@@ -89,6 +91,7 @@ public class FilterPanelViewModel : BaseViewModel
             return _Refresh_Command ??
                 (_Refresh_Command = new RelayCommand(obj =>
                 {
+                    onChange();
                     FiltersIsChanged = false;
                 }));
         }

@@ -10,15 +10,22 @@ public class BusinessPageViewModel : BaseViewModel
             Set(ref _Caption, value);
         }
     }
+    private List<TreeNode> periodsTree = new List<TreeNode>();
+    private List<TreeNode> ccTree = new List<TreeNode>();
+    private List<TreeNode> erTree = new List<TreeNode>();
 
     public FilterPanel FilterPanel { get; set; }
     public BusinessPageViewModel()
     {
+        periodsTree = PeriodTree();
+        ccTree = CCTree();
+        erTree = ERTree();
         List<TreeFilterCollection> treeFilterCollections = new();
-        treeFilterCollections.Add(new TreeFilterCollection { FilterCollection = PeriodTree(), Title = "Период:", InitType = TreeInitType.Last });
-        treeFilterCollections.Add(new TreeFilterCollection { FilterCollection = CCTree(), Title = "Центры затрат:", InitType = TreeInitType.All });
-        treeFilterCollections.Add(new TreeFilterCollection { FilterCollection = ERTree(), Title = "Энергоресурсы:", InitType = TreeInitType.All });
+        treeFilterCollections.Add(new TreeFilterCollection { FilterCollection = periodsTree, Title = "Период:", InitType = TreeInitType.Last });
+        treeFilterCollections.Add(new TreeFilterCollection { FilterCollection = ccTree, Title = "Центры затрат:", InitType = TreeInitType.All });
+        treeFilterCollections.Add(new TreeFilterCollection { FilterCollection = erTree, Title = "Энергоресурсы:", InitType = TreeInitType.All });
         FilterPanel = new FilterPanel(treeFilterCollections);
+        FilterPanel.ViewModel.onChange += FiltersOnChangeHandler;
     }
 
     #region Подготовка коллекция для передачи в модуль Фильтр
@@ -96,6 +103,26 @@ public class BusinessPageViewModel : BaseViewModel
     }
 
     #endregion
+
+    protected List<IdName> GetItemFilters(List<TreeNode> treeSource)
+    {
+        List<IdName> result = new ();
+        foreach (TreeNode family in treeSource)
+            foreach (TreeItem person in family.TreeNodeItems)
+                if (ItemHelper.GetIsChecked(person) == true)
+                {
+                    result.Add(new IdName() { Id = person.Id, Name = person.Name });
+                }
+        return result;
+    }
+
+    private void FiltersOnChangeHandler() // Получение итоговых наборов фильтров по Period, CC, ER
+    {
+        List<IdName> periodsFilterList = GetItemFilters(periodsTree);
+        List<IdName> ccFilterList = GetItemFilters(ccTree);
+        List<IdName> erFilterList = GetItemFilters(erTree);
+    }
+
 
 
 }

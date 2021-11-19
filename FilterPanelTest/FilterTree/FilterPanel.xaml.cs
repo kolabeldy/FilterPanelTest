@@ -1,11 +1,11 @@
 ﻿namespace FilterPanelTest.FilterTree;
 public partial class FilterPanel : UserControl
 {
-    private FilterPanelViewModel viewmodel;
+    public FilterPanelViewModel ViewModel { get; set; }
     public FilterPanel(List<TreeFilterCollection> treeFilterCollections)
     {
-        viewmodel = new FilterPanelViewModel(treeFilterCollections);
-        DataContext = viewmodel;
+        ViewModel = new FilterPanelViewModel(treeFilterCollections);
+        DataContext = ViewModel;
         InitializeComponent();
     }
 
