@@ -1,6 +1,8 @@
 ﻿namespace FilterPanelTest;
 public class BusinessPageViewModel : BaseViewModel
 {
+    public FilterPanel FilterPanel { get; set; }
+
     private string _Caption = "Тест панели фильтров";
     public string Caption
     {
@@ -10,11 +12,15 @@ public class BusinessPageViewModel : BaseViewModel
             Set(ref _Caption, value);
         }
     }
+
     private List<TreeNode> periodsTree = new List<TreeNode>();
     private List<TreeNode> ccTree = new List<TreeNode>();
     private List<TreeNode> erTree = new List<TreeNode>();
 
-    public FilterPanel FilterPanel { get; set; }
+    private List<IdName> periodsFilterList = new();
+    private List<IdName> ccFilterList = new();
+    private List<IdName> erFilterList = new();
+
     public BusinessPageViewModel()
     {
         periodsTree = PeriodTree();
@@ -104,9 +110,16 @@ public class BusinessPageViewModel : BaseViewModel
 
     #endregion
 
+    private void FiltersOnChangeHandler() // Получение итоговых наборов фильтров по Period, CC, ER
+    {
+        Refresh();
+    }
+
+    #region Установка набора фильтров и запись в базу данных
+
     protected List<IdName> GetItemFilters(List<TreeNode> treeSource)
     {
-        List<IdName> result = new ();
+        List<IdName> result = new();
         foreach (TreeNode family in treeSource)
             foreach (TreeItem person in family.TreeNodeItems)
                 if (ItemHelper.GetIsChecked(person) == true)
@@ -116,40 +129,34 @@ public class BusinessPageViewModel : BaseViewModel
         return result;
     }
 
-    private void FiltersOnChangeHandler() // Получение итоговых наборов фильтров по Period, CC, ER
+    private List<FilterTable> GetFilters()
     {
-        List<IdName> periodsFilterList = GetItemFilters(periodsTree);
-        List<IdName> ccFilterList = GetItemFilters(ccTree);
-        List<IdName> erFilterList = GetItemFilters(erTree);
+        List<FilterTable> result = new();
+        foreach (var r in periodsFilterList)
+        {
+            result.Add(new FilterTable { Category = "Monitor", Item = "Use", Indicator = "Period", Value = r.Id });
+        }
+        foreach (var r in ccFilterList)
+        {
+            result.Add(new FilterTable { Category = "Monitor", Item = "Use", Indicator = "CC", Value = r.Id });
+        }
+        foreach (var r in erFilterList)
+        {
+            result.Add(new FilterTable { Category = "Monitor", Item = "Use", Indicator = "ER", Value = r.Id });
+        }
+
+        return result;
     }
 
-    #region Для доработки
-
-    //private List<FilterTable> GetFilters(FilterSet filter)
-    //{
-    //    List<FilterTable> result = new();
-    //    result.Add(new FilterTable { Category = "Analysis", Item = "Use", Indicator = "PeriodMin", Value = FilterSet.StartPeriod });
-    //    result.Add(new FilterTable { Category = "Analysis", Item = "Use", Indicator = "PeriodMax", Value = FilterSet.EndPeriod });
-    //    result.Add(new FilterTable { Category = "Analysis", Item = "Use", Indicator = "PeriodDynamicMin", Value = FilterSet.StartDynamicPeriod });
-    //    result.Add(new FilterTable { Category = "Analysis", Item = "Use", Indicator = "PeriodDynamicMax", Value = FilterSet.EndDynamicPeriod });
-    //    foreach (var r in FilterSet.SelectedCC)
-    //    {
-    //        result.Add(new FilterTable { Category = "Analysis", Item = "Use", Indicator = "CC", Value = r.Id });
-    //    }
-    //    foreach (var r in FilterSet.SelectedER)
-    //    {
-    //        result.Add(new FilterTable { Category = "Analysis", Item = "Use", Indicator = "ER", Value = r.Id });
-    //    }
-
-    //    return result;
-    //}
-    //protected void Refresh(FilterSet filterSet)
-    //{
-    //    this.FilterSet = filterSet;
-    //    FilterTable filterTable = new();
-    //    filterTable.Delete("Analysis", "Use");
-    //    filterTable.AddRange(GetFilters(filterSet));
-    //}
+    private void Refresh()
+    {
+        periodsFilterList = GetItemFilters(periodsTree);
+        ccFilterList = GetItemFilters(ccTree);
+        erFilterList = GetItemFilters(erTree);
+        List<FilterTable> filtersTable = GetFilters();
+        FilterTable.Delete("Monitor", "Use");
+        FilterTable.AddRange(filtersTable);
+    }
 
     #endregion
 
