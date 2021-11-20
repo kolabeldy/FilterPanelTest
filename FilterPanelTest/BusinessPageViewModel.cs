@@ -4,8 +4,6 @@ using MyServicesLibrary.Controls.FilterPanelCheckedTree;
 namespace FilterPanelTest;
 public class BusinessPageViewModel : BaseViewModel
 {
-    public FilterPanel FilterPanel { get; set; }
-
     private string _Caption = "Тест панели фильтров";
     public string Caption
     {
@@ -16,10 +14,10 @@ public class BusinessPageViewModel : BaseViewModel
         }
     }
 
-    private List<TreeNode> periodsTree = new List<TreeNode>();
-    private List<TreeNode> ccTree = new List<TreeNode>();
-    private List<TreeNode> erTree = new List<TreeNode>();
+    // Объявление свойства - FilterPanel
+    public FilterPanel FilterPanel { get; set; }
 
+    // Набор коллекций - фильтров
     private List<IdName> periodsFilterList = new();
     private List<IdName> ccFilterList = new();
     private List<IdName> erFilterList = new();
@@ -29,15 +27,22 @@ public class BusinessPageViewModel : BaseViewModel
         periodsTree = PeriodTree();
         ccTree = CCTree();
         erTree = ERTree();
+
         List<TreeFilterCollection> treeFilterCollections = new();
         treeFilterCollections.Add(new TreeFilterCollection { FilterCollection = periodsTree, Title = "Период:", InitType = TreeInitType.Last });
         treeFilterCollections.Add(new TreeFilterCollection { FilterCollection = ccTree, Title = "Центры затрат:", InitType = TreeInitType.All });
         treeFilterCollections.Add(new TreeFilterCollection { FilterCollection = erTree, Title = "Энергоресурсы:", InitType = TreeInitType.All });
         FilterPanel = new FilterPanel(treeFilterCollections);
+
         FilterPanel.ViewModel.onChange += FiltersOnChangeHandler;
     }
 
     #region Подготовка коллекция для передачи в модуль Фильтр
+
+    // Набор коллекций в виде деревьев для инициации FilterPanel
+    private List<TreeNode> periodsTree = new List<TreeNode>();
+    private List<TreeNode> ccTree = new List<TreeNode>();
+    private List<TreeNode> erTree = new List<TreeNode>();
 
     private List<TreeNode> PeriodTree()
     {
